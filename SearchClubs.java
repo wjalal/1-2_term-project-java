@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class SearchClubs {
+public abstract class SearchClubs {
 
     public static List<Player> getMaxSalary (String club, List<Player> playerList) {
 

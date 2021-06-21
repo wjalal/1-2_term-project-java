@@ -85,9 +85,28 @@ public class Player {
         return salary;
     }
 
+    public static String showSalary(double salary) {
+        StringBuffer output = new StringBuffer( String.format("%.2f", salary) );
+        int commaNo = (output.length()-4)/3;
+        for (int i=1; i<=commaNo; i++) output.insert( output.length() - (3*(i+1) + i - 1), ',' );
+        return ("€" + output.toString());
+    }
+
+    public void print(int n) {
+        if(n>=0) System.out.println("—————————(" + n + ")—————————"); 
+        System.out.println("Name     : " + name);
+        System.out.println("Country  : " + country);
+        System.out.println("Age      : " + age + " years");
+        System.out.println("Height   : " + height + " metres");
+        System.out.println("Club     : " + club);
+        System.out.println("Position : " + position);
+        System.out.println("Number   : " + number);
+        System.out.println("Salary   : " + showSalary(salary));
+        System.out.println();
+    }
 
     public void print() {
-        System.out.println(name + ", " + country + ", " + age + ", " + height + ", " + club + ", " + position + ", " + number + ", " + salary);
+        print(-1);
     }
 
 }

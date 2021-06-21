@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class SearchPlayers {
+public abstract class SearchPlayers {
 
     public static Player searchByName (String name, List<Player> playerList) {
         for (Player p : playerList) {
