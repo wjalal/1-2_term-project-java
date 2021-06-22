@@ -1,16 +1,16 @@
 public class Player {
     private String name;
-    private String country;
+    private Country country;
     private int age;
     private double height;
-    private String club;
+    private Club club;
     private String position;
     private int number;
     private double salary;
 
     public Player() {}
 
-    public Player (String name, String country, int age, double height, String club, String position, int number, double salary) {
+    public Player (String name, Country country, int age, double height, Club club, String position, int number, double salary) {
         this.name = name;
         this.country = country;
         this.age = age;
@@ -29,11 +29,11 @@ public class Player {
         return this.name;
     }
     
-    public void setCountry (String country) {
+    public void setCountry (Country country) {
         this.country = country;
     }
 
-    public String getCountry() {
+    public Country getCountry() {
         return this.country;
     }
 
@@ -53,11 +53,11 @@ public class Player {
         return this.height;
     }
     
-    public void setClub(String club) {
+    public void setClub(Club club) {
         this.club = club;
     }
 
-    public String getClub() {
+    public Club getClub() {
         return club;
     }
 

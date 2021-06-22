@@ -9,27 +9,42 @@ public class Main {
 
     private static final String PLAYERDATA_FILE = "players.txt";
 
-    public static List<Player> readFromFile() throws Exception {
-        List<Player> playerList = new ArrayList<Player>();
+    public static void readFromFile (List<Player> playerList, List<Club> clubList, List<Country> countryList) throws Exception {
         BufferedReader br = new BufferedReader(new FileReader(PLAYERDATA_FILE));
         while (true) {
             String line = br.readLine();
-            if (line == null)
-                break;
+            if (line == null) break;
             String[] tokens = line.split(",");
             Player p = new Player();
             p.setName(tokens[0]);
-            p.setCountry(tokens[1]);
+
+            Country checkCountry = Country.getCountry(tokens[1], countryList);
+            if (checkCountry==null) {
+                p.setCountry(new Country(tokens[1]));
+                countryList.add(p.getCountry());
+                p.getCountry().addPlayer(p);
+            } else {
+                p.setCountry(checkCountry);
+                checkCountry.addPlayer(p);
+            }
             p.setAge(Integer.parseInt(tokens[2]));
             p.setHeight(Double.parseDouble(tokens[3]));
-            p.setClub(tokens[4]);
+
+            Club checkClub = Club.getClub(tokens[4], clubList);
+            if (checkClub==null) {
+                p.setClub(new Club(tokens[4]));
+                clubList.add(p.getClub());
+                p.getClub().addPlayer(p);
+            } else {
+                p.setClub(checkClub);
+                checkClub.addPlayer(p);
+            }
             p.setPosition(tokens[5]);
             p.setNumber(Integer.parseInt(tokens[6]));
             p.setSalary(Double.parseDouble(tokens[7]));
             playerList.add(p);
         }
         br.close();
-        return playerList;
     }
 
     public static void saveToFile(List<Player> playerList) throws Exception {
@@ -44,7 +59,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        List<Player> playerList = readFromFile();
+        List<Player> playerList = new ArrayList<Player>();
+        List<Club> clubList = new ArrayList<Club>();
+        List<Country> countryList = new ArrayList<Country>();
+        readFromFile(playerList, clubList, countryList);
+
         Scanner input = new Scanner(System.in);
         int navMain = 0, navSub = 0;
         System.out.println("\n–––––––––––––––––––––––––––––––––");
@@ -124,11 +143,15 @@ public class Main {
                                 if (club.length() < 1) System.out.println("\nClub name cannot be empty. Please try again.\n");
                                 else break;
                             }
-                            List<Player> result = SearchPlayers.searchByClubAndCountry(country, club, playerList);
-                            if (result != null) {
-                                System.out.println("\n" + result.size() + " player" + (result.size() > 1 ? "s" : "") + " found: \n");
-                                for (int i = 0; i < result.size(); i++) result.get(i).print(i + 1);
-                                System.out.println();
+                            if ( Country.getCountry(country, countryList) != null && (club.equalsIgnoreCase("ANY") || Club.getClub(club, clubList) != null)) {
+                                List<Player> result = new ArrayList<Player>();
+                                if (club.equalsIgnoreCase("ANY")) result = Country.getCountry(country, countryList).searchByClubAndCountry();
+                                else result = Country.getCountry(country, countryList).searchByClubAndCountry(Club.getClub(club, clubList));
+                                if (result != null) {
+                                    System.out.println("\n" + result.size() + " player" + (result.size() > 1 ? "s" : "") + " found: \n");
+                                    for (int i = 0; i < result.size(); i++) result.get(i).print(i + 1);
+                                    System.out.println();
+                                } else System.out.println("\nNo such player with this country and club\n");
                             } else System.out.println("\nNo such player with this country and club\n");
                             navSub = 0;
                             break;
@@ -151,10 +174,19 @@ public class Main {
                             break;
                         }
                         case 4: {
-                            System.out.println("Enter the 2 bounds of salary to search by range (space-separated): ");
-                            double r1 = input.nextDouble();
-                            double r2 = input.nextDouble();
-                            input.nextLine();
+                            double r1, r2;
+                            while (true) {
+                                try {
+                                    System.out.println("Enter the 2 bounds of salary to search by range (space-separated): ");
+                                    r1 = input.nextDouble();
+                                    r2 = input.nextDouble();
+                                    if (r1 < 0 || r2 < 0) throw (new Exception("negative"));
+                                    break;
+                                } catch (Exception e) {
+                                    System.out.println("\nInvalid input, please try again.\n");
+                                    input.nextLine();
+                                }
+                            }
                             List<Player> result = SearchPlayers.searchBySalary(r1, r2, playerList);
                             if (result != null) {
                                 System.out.println("\n" + result.size() + " player" + (result.size() > 1 ? "s" : "") + " found: \n");
@@ -166,7 +198,7 @@ public class Main {
                         }
                         case 5: {
                             System.out.println("\nCountry-wise count of players: \n");
-                            HashMap<String, Integer> counts = SearchPlayers.countryCount(playerList);
+                            HashMap<String, Integer> counts = SearchPlayers.countryCount(countryList);
                             int maxSize = 0;
                             for (String country : counts.keySet()) if (country.length() > maxSize) maxSize = country.length();
                             for (String country : counts.keySet()) {
@@ -212,8 +244,8 @@ public class Main {
                         case 1: {
                             System.out.println("Enter club name: ");
                             String club = input.nextLine().strip();
-                            List<Player> result = SearchClubs.getMaxSalary(club, playerList);
-                            if (result != null) {
+                            if (Club.getClub(club, clubList) != null) {
+                                List<Player> result = Club.getClub(club, clubList).getMaxSalary();
                                 System.out.println("\nPlayer" + (result.size() > 1 ? "s" : "") + " with the maximum salary in " + club + ":\n");
                                 for (int i = 0; i < result.size(); i++) result.get(i).print(i + 1);
                                 System.out.println();
@@ -224,8 +256,8 @@ public class Main {
                         case 2: {
                             System.out.println("Enter club name: ");
                             String club = input.nextLine().strip();
-                            List<Player> result = SearchClubs.getMaxAge(club, playerList);
-                            if (result != null) {
+                            if (Club.getClub(club, clubList) != null) {
+                                List<Player> result = Club.getClub(club, clubList).getMaxAge();
                                 System.out.println("\nPlayer" + (result.size() > 1 ? "s" : "") + " with the maximum age in " + club + ":\n");
                                 for (int i = 0; i < result.size(); i++) result.get(i).print(i + 1);
                                 System.out.println();
@@ -236,8 +268,8 @@ public class Main {
                         case 3: {
                             System.out.println("Enter club name: ");
                             String club = input.nextLine().strip();
-                            List<Player> result = SearchClubs.getMaxHeight(club, playerList);
-                            if (result != null) {
+                            if (Club.getClub(club, clubList) != null) {
+                                List<Player> result = Club.getClub(club, clubList).getMaxHeight();
                                 System.out.println("\nPlayer" + (result.size() > 1 ? "s" : "") + " with the maximum height in " + club + ":\n");
                                 for (int i = 0; i < result.size(); i++) result.get(i).print(i + 1);
                                 System.out.println();
@@ -248,9 +280,10 @@ public class Main {
                         case 4: {
                             System.out.println("Enter club name: ");
                             String club = input.nextLine().strip();
-                            double result = SearchClubs.getClubAnnualSalary(club, playerList);
-                            if (result > -1) System.out.println("\nTotal yearly salary of " + club + " is: " + Player.showSalary(result) + "\n");
-                            else System.out.println("No such club with this name\n");
+                            if (Club.getClub(club, clubList) != null) {
+                                double result = Club.getClub(club, clubList).getClubAnnualSalary();
+                                System.out.println("\nTotal yearly salary of " + club + " is: " + Player.showSalary(result) + "\n");
+                            } else System.out.println("No such club with this name\n");
                             navSub = 0;
                             break;
                         }
@@ -271,16 +304,20 @@ public class Main {
 
                     System.out.println("Enter new player information: \n");
 
-                    String club;
+                    String clubName; Club club = new Club();
                     while (true) {
                         System.out.print("Club: ");
-                        club = input.nextLine().strip();
-                        if (club.length() < 1) System.out.println("\nClub name cannot be empty. Please try again.\n");
-                        else if (!AddPlayer.isClubValid(club, playerList)) {
+                        clubName = input.nextLine().strip();
+                        if (clubName.length() < 1) System.out.println("\nClub name cannot be empty. Please try again.\n");
+                        else if (!AddPlayer.isClubValid( Club.getClub(clubName, clubList) )) {
                             System.out.println("\nThis club already has 7 (maximum) players.\n");
                             navMain = 0;
                             break;
-                        } else break;
+                        } else {
+                            club = Club.getClub(clubName, clubList); 
+                            if (club == null) club = new Club(clubName);
+                            break;
+                        }
                     }
                     if (navMain == 0) break;
 
@@ -298,12 +335,16 @@ public class Main {
                     }
                     if (navMain == 0) break;
 
-                    String country;
+                    String countryName; Country country = new Country();
                     while (true) {
                         System.out.print("Country: ");
-                        country = input.nextLine().strip();
-                        if (country.length() < 1) System.out.println("\nCountry name cannot be empty. Please try again.\n");
-                        else break;
+                        countryName = input.nextLine().strip();
+                        if (countryName.length() < 1) System.out.println("\nCountry name cannot be empty. Please try again.\n");
+                        else {
+                            country = Country.getCountry(countryName, countryList); 
+                            if (country == null) country = new Country(countryName);
+                            break;
+                        }
                     }
 
                     int age;
@@ -356,7 +397,7 @@ public class Main {
                             System.out.print("Number: ");
                             number = input.nextInt();
                             if (number < 1) throw (new Exception("non-positive"));
-                            if (!AddPlayer.isNumberValid(club, number, playerList)) throw (new Exception("pre-exists"));
+                            if (!AddPlayer.isNumberValid(club, number)) throw (new Exception("pre-exists"));
                             break;
                         } catch (Exception e) {
                             if (e.getMessage() != null && e.getMessage().equals("pre-exists"))

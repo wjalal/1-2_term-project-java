@@ -6,15 +6,16 @@ public abstract class AddPlayer {
         return true;
     }
 
-    public static boolean isClubValid (String club, List<Player> playerList) {
-        int clubCount = 0;
-        for (Player p : playerList) if (p.getClub().equalsIgnoreCase(club)) clubCount++;
-        if (clubCount < 7) return true;
+    public static boolean isClubValid (Club club) {
+        // int clubCount = 0;
+        // for (Player p : playerList) if (p.getClub() == club) clubCount++;
+        if (club == null) return false;
+        if (club.getPlayers().size() < 7) return true;
         return false;
     }
 
-    public static boolean isNumberValid (String club, int number, List<Player> playerList) {
-        for (Player p : playerList) if ( p.getClub().equalsIgnoreCase(club) && p.getNumber()==number ) return false;
+    public static boolean isNumberValid (Club club, int number) {
+        for (Player p : club.getPlayers()) if ( p.getClub()==club && p.getNumber()==number ) return false;
         return true;
     }
     

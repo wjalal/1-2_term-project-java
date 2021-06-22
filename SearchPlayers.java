@@ -9,17 +9,6 @@ public abstract class SearchPlayers {
         return null;
     }
 
-    public static List<Player> searchByClubAndCountry (String country, String club, List<Player> playerList) {
-        List<Player> countryList = new ArrayList<Player>();
-        for (Player p : playerList) {
-            if (p.getCountry().equalsIgnoreCase(country)) {
-                if ( club.equalsIgnoreCase("ANY") || p.getClub().equalsIgnoreCase(club) ) countryList.add(p);
-            }
-        }
-        if (countryList.size() == 0) return null;
-        return countryList;
-    }
-
     public static List<Player> searchByPosition (String position, List<Player> playerList) {
         List<Player> posList = new ArrayList<Player>();
         for (Player p : playerList) {
@@ -46,12 +35,9 @@ public abstract class SearchPlayers {
         return salList;
     }
 
-    public static HashMap<String, Integer> countryCount (List<Player> playerList) {
+    public static HashMap<String, Integer> countryCount (List<Country> countryList) {
         HashMap<String, Integer> counts = new HashMap<String, Integer>();
-        for (Player p : playerList) {
-            if (counts.containsKey(p.getCountry())) counts.put(p.getCountry(), counts.get(p.getCountry()) + 1);
-            else counts.put(p.getCountry(), 1);
-        }
+        for (Country c : countryList) counts.put(c.getName(), c.getPlayers().size());
         return counts;
     }
     
