@@ -18,21 +18,8 @@ Virgil van Dijk,Netherlands,29,1.93,Liverpool,Defender,4,180000.0
 Jordan Henderson,England,30,1.82,Liverpool,Midfielder,14,140000.0
 Thiago Alcantaram,Brazil,30,1.74,Liverpool,Midfielder,6,200000.0
 Mohamed Salah,Egypt,28,1.75,Liverpool,Forward,11,200000.0
+Bernd Leno,Germany,29,1.9,Arsenal,Goalkeeper,1,100000.0
 Hector Bellerin,Spain,26,1.78,Arsenal,Defender,2,110000.0
 Granit Xhaka,Switzerland,28,1.85,Arsenal,Midfielder,34,100000.0
 Thomas Partey,Ghana,27,1.85,Arsenal,Midfielder,18,250000.0
-Lionel MEssi,Argentina,33,170.0,F.C. Barcelona,Forward,10,500000.0
-Cristiano Ronaldo,Portugal,38,1.87,Juventus,Forward,7,400000.0
-Neymar Jr.,Brazil,27,1.86,PSG,Forward,10,350000.0
-Marcello,Brazil,35,1.73,IDK,Midfielder,4,250000.0
-Pagla Khan,Bengal,24,1.66,Akhaura,Defender,3,2134.0
-David Smith,Scotland,24,1.44,Liverpool,Defender,3,123333.0
-Ngolo Oyeoyeou,Nigera,20,1.88,Liverpool,Forward,9,260000.0
-Naga,Japan,3,1.55,Nagasaki,Defender,4,123444.0
-Pagla,Bengal,26,1.78,Arsenal,Defender,14,1.20069696969E13
-Anjel di Maria,Argentina,33,1.7,Manchester City,Midfielder,4,200000.0
-Kleidermeister,Germany,34,1.77,Manchester United,Goalkeeper,44,33.0
-Ningun,Czechia,23,1.88,Hafa,Defender,4,233333.0
-Salimuddin,Bangladesh,27,1.66,Mohamedan,Forward,8,123445.0
-Indramohan Rajbansi,India,24,1.77,Kaffara,Defender,2,12344.0
-Netherlands,Chungus,22,1.44,Arsenal,Defender,3,5514355.0
+Pierre-Emerick Aubameyang,Gabon,31,1.87,Arsenal,Forward,14,250000.0
