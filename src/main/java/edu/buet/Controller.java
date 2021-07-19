@@ -11,7 +11,7 @@ import javafx.scene.image.*;
 import java.util.*;
 import javafx.collections.FXCollections;
 
-public class PrimaryController {
+public class Controller {
 
     @FXML private ListView<String> playerListView = new ListView<>();
     @FXML private ComboBox<String> nameSearch, clubSearch, countrySearch, positionSearch;
@@ -19,29 +19,19 @@ public class PrimaryController {
     @FXML private Label ageLabel, heightLabel, numberLabel, positionLabel, salaryLabel, nameLabel, clubLabel, countryLabel;
     @FXML private ImageView playerImage, clubImage, countryImage;
 
-    PlayerList playerList = new PlayerList();
+    PlayerList playerList = App.getPlayerList();
     List<Club> clubList = playerList.getClubList();
     List<Country> countryList = playerList.getCountryList();
 
     @FXML protected void initialize() throws Exception {
         playerList.readFromFile(clubList, countryList);
+
         loadPlayers();
-    }
 
-    @FXML private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
-    }
-    
-
-    @FXML private void loadPlayers() throws Exception {
-
-        // for (Player p : playerList.get())
-        //     playerListView.getItems().add(p.getName());
-        // playerListView.setItems( playerListView.getItems().sorted());
-
-        playerListView.setItems( FXCollections.observableArrayList(PlayerList.nameList(playerList.get())));
         clubSearch.setItems(FXCollections.observableArrayList(Club.nameList(clubList)));
+        clubSearch.getItems().add(0, "—————————————— Any ——————————————");
         countrySearch.setItems(FXCollections.observableArrayList(Country.nameList(countryList)));
+        countrySearch.getItems().add(0, "—————————— Any ——————————");
         positionSearch.getItems().addAll("Forward", "Midfielder", "Defender", "Goalkeeper");
 
         // );
@@ -97,6 +87,19 @@ public class PrimaryController {
         });
     }
 
+    @FXML private void switchToSecondary() throws IOException {
+        App.setRoot("secondary");
+    }
+
+    @FXML private void loadPlayers() {
+        // for (Player p : playerList.get())
+        //     playerListView.getItems().add(p.getName());
+        // playerListView.setItems( playerListView.getItems().sorted());
+
+        playerListView.setItems( FXCollections.observableArrayList(PlayerList.nameList(playerList.get())));
+
+    }
+
     @FXML private void predictName() {
         //nameSearch.show();
         
@@ -114,11 +117,31 @@ public class PrimaryController {
     }
 
     @FXML private void searchByCountryAndClub() {
-        Club club = playerList.getClub(clubSearch.getValue().strip());
-        Country country = playerList.getCountry(countrySearch.getValue().strip());
-        List<Player> result = country.searchByClubAndCountry(club);
+
+        Country country; Club club; List<Player> result = new ArrayList<>();
+        boolean change = true;
+
+        if (clubSearch.getSelectionModel().getSelectedIndex() == 0) {
+            if (countrySearch.getSelectionModel().getSelectedIndex() == 0) {
+                loadPlayers();
+                change = false;
+            } else {
+                country = playerList.getCountry(countrySearch.getValue().strip());
+                result = country.searchByClubAndCountry();
+            }
+        } else {
+            if (countrySearch.getSelectionModel().getSelectedIndex() == 0) {
+                club = playerList.getClub(clubSearch.getValue().strip());
+                result = club.searchByClubAndCountry();
+            } else {
+                club = playerList.getClub(clubSearch.getValue().strip());
+                country = playerList.getCountry(countrySearch.getValue().strip());
+                result = country.searchByClubAndCountry(club);
+            }
+        }
+        
         if (result == null) NullPlayerListWarning.display();
-        else {
+        else if (change) {
             playerListView.setItems(FXCollections.observableArrayList(PlayerList.nameList(result)));
             resetPlayerInfo();
         }

@@ -21,6 +21,19 @@ public class Club extends Team {
         return true;
     }
 
+    public List<Player> searchByClubAndCountry (Country country) {
+        List<Player> clubList = new ArrayList<Player>();
+        for (Player p : this.getPlayers()) if (p.getCountry() == country) clubList.add(p);
+        if (clubList.size() < 1) return null;
+        return clubList;
+    }
+
+    public List<Player> searchByClubAndCountry() {
+        List<Player> clubList = new ArrayList<Player>();
+        for (Player p : this.getPlayers()) clubList.add(p);
+        if (clubList.size() < 1) return null;
+        return clubList;
+    }
 
     public static List<String> nameList (List<Club> teamList) {
         List<String> list = new ArrayList<>();

@@ -19,9 +19,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.buet.PrimaryController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.buet.Controller">
    <children>
-      <TabPane prefHeight="111.0" prefWidth="1240.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="111.0" prefWidth="1240.0" rotateGraphic="true" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Search by Name">
             <content>
@@ -93,7 +93,7 @@
                               <Label text="From" />
                               <Spinner fx:id="r1Spinner" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0">
                                  <valueFactory>
-                                    <SpinnerValueFactory.DoubleSpinnerValueFactory max="9999999999999999" min="0" amountToStepBy="8000"/>
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="8000" max="9999999999999999" min="0" />
                                  </valueFactory>
                               </Spinner>
                               <Label text="To">
@@ -103,7 +103,7 @@
                               </Label>
                               <Spinner fx:id="r2Spinner" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0">
                                  <valueFactory>
-                                    <SpinnerValueFactory.DoubleSpinnerValueFactory max="9999999999999999" min="0" amountToStepBy="8000"/>
+                                    <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="8000" max="9999999999999999" min="0" />
                                  </valueFactory>
                               </Spinner>
                               <Button fx:id="nameSearchButton11" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#searchBySalary" prefHeight="40.0" prefWidth="119.0" text="Search">
@@ -120,7 +120,15 @@
                   </AnchorPane>
                </content>
             </Tab>
+            <Tab onSelectionChanged="#switchToSecondary" text="Country / Club Demographics">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
         </tabs>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </TabPane>
       <HBox prefHeight="456.0" prefWidth="1240.0" spacing="30.0">
          <children>
