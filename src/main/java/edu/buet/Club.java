@@ -1,7 +1,10 @@
 package edu.buet;
 import java.util.*;
+import javafx.scene.image.*;
 
 public class Club extends Team {
+
+    private Image logo;
 
     public Club() {
         super();
@@ -9,6 +12,7 @@ public class Club extends Team {
 
     public Club(String name) {
         super(name);
+        this.logo = new Image(getClass().getResourceAsStream("clublogo/" + this.getName() + ".png"));
     }
 
     public boolean isFull() {
@@ -39,6 +43,10 @@ public class Club extends Team {
         List<String> list = new ArrayList<>();
         for (Club p : teamList) list.add(p.getName());
         return list;
+    }
+
+    public Image getLogo() {
+        return this.logo;
     }
 
 }

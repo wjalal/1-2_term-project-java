@@ -41,6 +41,14 @@ public abstract class Team {
         return maxSalList;
     }  
 
+    public List<Player> getMinSalary() {
+        List<Player> minSalList = new ArrayList<Player>();
+        double min = Double.MAX_VALUE;
+        for (Player p : getPlayers()) if (p.getSalary() < min) min = p.getSalary();
+        for (Player p : getPlayers()) if (p.getSalary() == min) minSalList.add(p);
+        return minSalList;
+    }  
+
     public List<Player> getMaxAge() {
         List<Player> maxAgeList = new ArrayList<Player>();
         int max = 0;
@@ -65,6 +73,14 @@ public abstract class Team {
         return maxHeightList;
     }   
 
+    public List<Player> getMinHeight() {
+        List<Player> minHeightList = new ArrayList<Player>();
+        double min = Double.MAX_VALUE;
+        for (Player p : getPlayers()) if (p.getHeight() < min) min = p.getHeight();
+        for (Player p : getPlayers()) if (p.getHeight() == min) minHeightList.add(p);
+        return minHeightList;
+    }  
+
     public double getAnnualSalary() {
         double sum = 0;
         // int count = 0;
@@ -72,5 +88,13 @@ public abstract class Team {
         // if (count == 0) return -5;
         return (sum*52);
     }   
+
+    public String getSalarystring() {
+        return (  Player.showSalary(getAnnualSalary()) );
+    }
+
+    public int getCount() {
+        return this.players.size();
+    }
 
 }

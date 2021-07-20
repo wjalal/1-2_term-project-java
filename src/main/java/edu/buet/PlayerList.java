@@ -84,7 +84,10 @@ public class PlayerList {
         return null;
     }
 
-    public void readFromFile (List<Club> clubList, List<Country> countryList) throws Exception {
+    public void readFromFile () throws Exception {
+        playerList.clear();
+        countryList.clear();
+        clubList.clear();
         BufferedReader br = new BufferedReader(new FileReader("players.txt"));
         while (true) {
             String line = br.readLine();

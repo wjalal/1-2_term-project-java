@@ -1,8 +1,11 @@
 package edu.buet;
 
 import java.util.*;
+import javafx.scene.image.*;
 
 public class Country extends Team {
+
+    private Image flag;
 
     public Country() {
         super();
@@ -10,6 +13,7 @@ public class Country extends Team {
 
     public Country(String name) {
         super(name);
+        this.flag = new Image(getClass().getResourceAsStream("cflag/" + this.getName() + ".png"));
     }
 
     public List<Player> searchByClubAndCountry (Club club) {
@@ -31,5 +35,9 @@ public class Country extends Team {
         List<String> list = new ArrayList<>();
         for (Country p : teamList) list.add(p.getName());
         return list;
+    }
+
+    public Image getFlag() {
+        return this.flag;
     }
 }

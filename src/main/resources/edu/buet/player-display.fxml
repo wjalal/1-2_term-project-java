@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox prefHeight="456.0" prefWidth="1240.0" spacing="30.0" xmlns:fx="http://javafx.com/fxml" fx:controller="edu.buet.PlayerDisplayController">
+   <children>
+      <VBox prefHeight="456.0" prefWidth="1240.0">
+         <children>
+            <ListView fx:id="playerListView" onKeyPressed="#showPlayerInfo" onMouseClicked="#showPlayerInfo" prefHeight="386.0" prefWidth="609.0" />
+            <Button fx:id="testLoad" maxHeight="-Infinity" minHeight="-Infinity" onAction="#loadPlayers" prefHeight="40.0" prefWidth="598.0" text="Show all players">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
+         <padding>
+            <Insets bottom="15.0" />
+         </padding>
+      </VBox>
+      <VBox alignment="CENTER" prefHeight="556.0" prefWidth="1362.0" spacing="30.0">
+         <children>
+            <Label fx:id="nameLabel" text="Player Information">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="playerImage" fitHeight="191.0" fitWidth="183.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pfp/profile.png" />
+                     </image>
+                  </ImageView>
+                  <VBox alignment="TOP_CENTER" prefHeight="183.0" prefWidth="192.0" spacing="10.0">
+                     <children>
+                        <Label text="Club">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="clubImage" fitHeight="86.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                           <image>
+                              <Image url="@clublogo/logo.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="clubLabel" alignment="CENTER" disable="true" prefHeight="39.0" prefWidth="132.0" text="No data selected" wrapText="true" />
+                     </children>
+                     <padding>
+                        <Insets left="30.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" layoutX="354.0" layoutY="10.0" prefHeight="169.0" prefWidth="181.0" spacing="25.0">
+                     <children>
+                        <Label text="Country">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="countryImage" fitHeight="65.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@cflag/flag.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="countryLabel" alignment="CENTER" disable="true" prefHeight="16.0" prefWidth="146.0" text="No data selected" wrapText="true" />
+                     </children>
+                     <padding>
+                        <Insets left="30.0" right="30.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+            <GridPane alignment="CENTER" gridLinesVisible="true" prefHeight="150.0" prefWidth="712.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="213.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="221.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="Age">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="Height" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="Number" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="Position" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="Salary" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="ageLabel" disable="true" text="No data selected" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="heightLabel" disable="true" layoutX="362.0" layoutY="17.0" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="numberLabel" disable="true" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="positionLabel" disable="true" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="salaryLabel" disable="true" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="100.0" right="100.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+</HBox>

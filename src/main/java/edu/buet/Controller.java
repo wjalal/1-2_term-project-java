@@ -2,34 +2,47 @@ package edu.buet;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
+// import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.image.*;
+import javafx.scene.control.ToggleGroup;
+// import javafx.scene.control.Label;
+// import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+// import javafx.scene.image.*;
 
 import java.util.*;
 import javafx.collections.FXCollections;
 
 public class Controller {
 
-    @FXML private ListView<String> playerListView = new ListView<>();
-    @FXML private ComboBox<String> nameSearch, clubSearch, countrySearch, positionSearch;
-    @FXML private Spinner<Double> r1Spinner, r2Spinner; 
-    @FXML private Label ageLabel, heightLabel, numberLabel, positionLabel, salaryLabel, nameLabel, clubLabel, countryLabel;
-    @FXML private ImageView playerImage, clubImage, countryImage;
+    
+
+    // @FXML private ListView<String> playerListView = playerDisplay.getPlayerListView();
+    // @FXML private Label ageLabel = playerDisplay.getAgeLabel(), heightLabel = playerDisplay.getHeightLabel(), numberLabel = playerDisplay.getNumberLabel(), 
+    //                     positionLabel = playerDisplay.getPositionLabel(), salaryLabel = playerDisplay.getSalaryLabel(), nameLabel = playerDisplay.getNameLabel(), 
+    //                     clubLabel = playerDisplay.getClubLabel(), countryLabel = playerDisplay.getCountryLabel();
+    // @FXML private ImageView playerImage = playerDisplay.getPlayerImage(), clubImage = playerDisplay.getClubImage(), countryImage = playerDisplay.getCountryImage();
 
     PlayerList playerList = App.getPlayerList();
     List<Club> clubList = playerList.getClubList();
     List<Country> countryList = playerList.getCountryList();
 
+    @FXML private ComboBox<String> nameSearch, clubSearch, countrySearch, positionSearch, selectedClub;
+    @FXML private Spinner<Double> r1Spinner, r2Spinner; 
+    @FXML private PlayerDisplayController playerDisplayPController, playerDisplayCController;
+    @FXML private ToggleGroup salaryMaxMin, ageMaxMin, heightMaxMin;
+
     @FXML protected void initialize() throws Exception {
-        playerList.readFromFile(clubList, countryList);
+        playerList.readFromFile();
+        //playerDisplayPController.setPlayerList(playerList);
 
-        loadPlayers();
-
+        playerDisplayPController.loadPlayers();
+        playerDisplayCController.loadPlayers();
         clubSearch.setItems(FXCollections.observableArrayList(Club.nameList(clubList)));
         clubSearch.getItems().add(0, "—————————————— Any ——————————————");
+        selectedClub.setItems(FXCollections.observableArrayList(Club.nameList(clubList)));
+        selectedClub.getSelectionModel().select(0);
         countrySearch.setItems(FXCollections.observableArrayList(Country.nameList(countryList)));
         countrySearch.getItems().add(0, "—————————— Any ——————————");
         positionSearch.getItems().addAll("Forward", "Midfielder", "Defender", "Goalkeeper");
@@ -68,6 +81,24 @@ public class Controller {
             clubSearch.show();
         });
 
+        selectedClub.getEditor().setOnKeyTyped((e) -> {
+            System.out.println(selectedClub.getEditor().getText());
+            if (!selectedClub.getEditor().getText().strip().equals("")) {
+                List<String> predictions = new ArrayList<>();
+                for (Club p : clubList) 
+                    if ( p.getName().toLowerCase().startsWith(selectedClub.getEditor().getText().strip().toLowerCase()) ) {
+                        System.out.println(p.getName());
+                        predictions.add(p.getName());
+                    }
+                selectedClub.setItems(FXCollections.observableArrayList(predictions));
+                selectedClub.hide();
+            } else {
+                selectedClub.setItems(FXCollections.observableArrayList(Club.nameList(clubList)));
+                selectedClub.hide();
+            }
+            selectedClub.show();
+        });
+
         countrySearch.getEditor().setOnKeyTyped((e) -> {
             System.out.println(countrySearch.getEditor().getText());
             if (!countrySearch.getEditor().getText().strip().equals("")) {
@@ -87,32 +118,17 @@ public class Controller {
         });
     }
 
-    @FXML private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
-    }
-
-    @FXML private void loadPlayers() {
-        // for (Player p : playerList.get())
-        //     playerListView.getItems().add(p.getName());
-        // playerListView.setItems( playerListView.getItems().sorted());
-
-        playerListView.setItems( FXCollections.observableArrayList(PlayerList.nameList(playerList.get())));
-
-    }
-
-    @FXML private void predictName() {
-        //nameSearch.show();
-        
-
+    @FXML private void showDemographics() throws IOException {
+        App.setRoot("demographics");
     }
 
     @FXML private void searchByName() {
         Player p = playerList.searchByName((String) nameSearch.getValue());
         if (p == null) NullPlayerListWarning.display();
         else {
-            playerListView.getSelectionModel().select(p.getName());
-            playerListView.scrollTo(p.getName());
-            showPlayerInfo(p);
+            playerDisplayPController.playerListView.getSelectionModel().select(p.getName());
+            playerDisplayPController.playerListView.scrollTo(p.getName());
+            playerDisplayPController.showPlayerInfo(p);
         }
     }
 
@@ -123,7 +139,7 @@ public class Controller {
 
         if (clubSearch.getSelectionModel().getSelectedIndex() == 0) {
             if (countrySearch.getSelectionModel().getSelectedIndex() == 0) {
-                loadPlayers();
+                playerDisplayPController.loadPlayers();
                 change = false;
             } else {
                 country = playerList.getCountry(countrySearch.getValue().strip());
@@ -142,8 +158,8 @@ public class Controller {
         
         if (result == null) NullPlayerListWarning.display();
         else if (change) {
-            playerListView.setItems(FXCollections.observableArrayList(PlayerList.nameList(result)));
-            resetPlayerInfo();
+            playerDisplayPController.playerListView.setItems(FXCollections.observableArrayList(PlayerList.nameList(result)));
+            playerDisplayPController.resetPlayerInfo();
         }
     }
 
@@ -151,8 +167,8 @@ public class Controller {
         List<Player> result = playerList.searchByPosition(positionSearch.getValue());
         if (result == null) NullPlayerListWarning.display();
         else {
-            playerListView.setItems(FXCollections.observableArrayList(PlayerList.nameList(result)));
-            resetPlayerInfo();
+            playerDisplayPController.playerListView.setItems(FXCollections.observableArrayList(PlayerList.nameList(result)));
+            playerDisplayPController.resetPlayerInfo();
         }
     }
 
@@ -160,62 +176,49 @@ public class Controller {
         List<Player> result = playerList.searchBySalary(r1Spinner.getValue(), r2Spinner.getValue());
         if (result == null) NullPlayerListWarning.display();
         else {
-            playerListView.setItems(FXCollections.observableArrayList(PlayerList.nameList(result)));
-            resetPlayerInfo();
+            playerDisplayPController.playerListView.setItems(FXCollections.observableArrayList(PlayerList.nameList(result)));
+            playerDisplayPController.resetPlayerInfo();
         }
     }
 
-    @FXML private void resetPlayerInfo() {
-        nameLabel.setText("Player Information");
-        ageLabel.setText("No data selected");
-        ageLabel.setDisable(true);
-        heightLabel.setText("No data selected");
-        heightLabel.setDisable(true);
-        numberLabel.setText("No data selected");
-        numberLabel.setDisable(true);
-        positionLabel.setText("No data selected");
-        positionLabel.setDisable(true);
-        salaryLabel.setText("No data selected");
-        salaryLabel.setDisable(true);
-        clubLabel.setText("No data selected");
-        clubLabel.setDisable(true);
-        countryLabel.setText("No data selected");
-        countryLabel.setDisable(true);
-        Image pfp = new Image(getClass().getResourceAsStream("pfp/profile.png"));
-        playerImage.setImage(pfp);
-        Image cflag = new Image(getClass().getResourceAsStream("cflag/flag.png"));
-        countryImage.setImage(cflag);
-        Image clublogo = new Image(getClass().getResourceAsStream("clublogo/logo.png"));
-        clubImage.setImage(clublogo);
+    @FXML private void searchMaxMinSalary() {
+        Club club = playerList.getClub(selectedClub.getValue().strip());
+        List<Player> result = new ArrayList<>();
+        System.out.println(((RadioButton) salaryMaxMin.getSelectedToggle()).getText());
+        if ( ((RadioButton) salaryMaxMin.getSelectedToggle()).getText().equals("MAX") ) result = club.getMaxSalary();
+        else if ( ((RadioButton) salaryMaxMin.getSelectedToggle()).getText().equals("MIN") ) result = club.getMinSalary();
+
+        playerDisplayCController.playerListView.setItems(FXCollections.observableArrayList(PlayerList.nameList(result)));
+        playerDisplayCController.resetPlayerInfo();
+        
     }
 
-    @FXML private void showPlayerInfo(Player p) {
-        nameLabel.setText(p.getName());
-        ageLabel.setText(Integer.toString(p.getAge()) + " years");
-        ageLabel.setDisable(false);
-        heightLabel.setText(Double.toString(p.getHeight()) + " metres");
-        heightLabel.setDisable(false);
-        numberLabel.setText(Integer.toString(p.getNumber()));
-        numberLabel.setDisable(false);
-        positionLabel.setText(p.getPosition());
-        positionLabel.setDisable(false);
-        salaryLabel.setText(Player.showSalary(p.getSalary()));
-        salaryLabel.setDisable(false);
-        clubLabel.setText(p.getClub().getName());
-        clubLabel.setDisable(false);
-        countryLabel.setText(p.getCountry().getName());
-        countryLabel.setDisable(false);
-        Image pfp = new Image(getClass().getResourceAsStream("pfp/" + p.getName() + ".png"));
-        playerImage.setImage(pfp);
-        Image cflag = new Image(getClass().getResourceAsStream("cflag/" + p.getCountry().getName() + ".png"));
-        countryImage.setImage(cflag);
-        Image clublogo = new Image(getClass().getResourceAsStream("clublogo/" + p.getClub().getName() + ".png"));
-        clubImage.setImage(clublogo);
+    @FXML private void searchMaxMinAge() {
+        Club club = playerList.getClub(selectedClub.getValue().strip());
+        List<Player> result = new ArrayList<>();
+        System.out.println(((RadioButton) ageMaxMin.getSelectedToggle()).getText());
+        if ( ((RadioButton) ageMaxMin.getSelectedToggle()).getText().equals("MAX") ) result = club.getMaxAge();
+        else if ( ((RadioButton) ageMaxMin.getSelectedToggle()).getText().equals("MIN") ) result = club.getMinAge();
+
+        playerDisplayCController.playerListView.setItems(FXCollections.observableArrayList(PlayerList.nameList(result)));
+        playerDisplayCController.resetPlayerInfo();
+        
     }
 
-    @FXML private void showPlayerInfo() {
-        // System.out.println((String)playerListView.getSelectionModel().getSelectedItem());
-        showPlayerInfo(playerList.searchByName((String) playerListView.getSelectionModel().getSelectedItem()));
+    @FXML private void searchMaxMinHeight() {
+        Club club = playerList.getClub(selectedClub.getValue().strip());
+        List<Player> result = new ArrayList<>();
+        System.out.println(((RadioButton) heightMaxMin.getSelectedToggle()).getText());
+        if ( ((RadioButton) heightMaxMin.getSelectedToggle()).getText().equals("MAX") ) result = club.getMaxHeight();
+        else if ( ((RadioButton) heightMaxMin.getSelectedToggle()).getText().equals("MIN") ) result = club.getMinHeight();
 
+        playerDisplayCController.playerListView.setItems(FXCollections.observableArrayList(PlayerList.nameList(result)));
+        playerDisplayCController.resetPlayerInfo();
+        
     }
+
+    @FXML private void showAnnualSalary() throws IOException {
+        App.setRoot("salary");
+    }
+
 }
