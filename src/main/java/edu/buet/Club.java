@@ -1,18 +1,20 @@
 package edu.buet;
 import java.util.*;
 import javafx.scene.image.*;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 
 public class Club extends Team {
 
-    private Image logo;
+    private byte[] logoBytes;
 
     public Club() {
         super();
     }
 
-    public Club(String name) {
+    public Club(String name) throws Exception {
         super(name);
-        this.logo = new Image(getClass().getResourceAsStream("clublogo/" + this.getName() + ".png"));
+        this.logoBytes = this.getClass().getResourceAsStream("clublogo/" + this.getName() + ".png").readAllBytes();
     }
 
     public boolean isFull() {
@@ -46,7 +48,9 @@ public class Club extends Team {
     }
 
     public Image getLogo() {
-        return this.logo;
+        InputStream is = new ByteArrayInputStream(logoBytes); 
+        Image logo = new Image(is);
+        return logo;
     }
 
 }

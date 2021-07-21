@@ -20,7 +20,8 @@ public class DemographicsController {
     List<Country> countryList = playerList.getCountryList();
 
     @FXML private void switchToPrimary() throws IOException {
-        App.setRoot("primary");
+        if (App.getUserMode() == UserMode.GUEST) App.setRoot("guest");
+        else if (App.getUserMode() == UserMode.LOGGED_IN) App.setRoot("signed_in");
     }
 
     @FXML private TableView<Country> countryTable;

@@ -1,6 +1,11 @@
 package edu.buet;
 
-public class Player {
+import java.io.Serializable;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import javafx.scene.image.*;
+
+public class Player implements Serializable {
     private String name;
     private Country country;
     private int age;
@@ -9,10 +14,14 @@ public class Player {
     private String position;
     private int number;
     private double salary;
+    private byte[] pfpBytes;
+    private boolean auctioned;
 
-    public Player() {}
+    public Player() {
+        this.auctioned = false;
+    }
 
-    public Player (String name, Country country, int age, double height, Club club, String position, int number, double salary) {
+    public Player (String name, Country country, int age, double height, Club club, String position, int number, double salary) throws Exception {
         this.name = name;
         this.country = country;
         this.age = age;
@@ -21,6 +30,8 @@ public class Player {
         this.position = position;
         this.number = number;
         this.salary = salary;
+        this.setPfp();
+        this.auctioned = false;
     }
 
     public void setName (String name) {
@@ -87,6 +98,16 @@ public class Player {
         return salary;
     }
 
+    public void setPfp() throws Exception {
+        this.pfpBytes = this.getClass().getResourceAsStream("pfp/" + name + ".png").readAllBytes();
+    }
+
+    public Image getPfp() {
+        InputStream is = new ByteArrayInputStream(pfpBytes); 
+        Image pfp = new Image(is);
+        return pfp;
+    }
+
     public static String showSalary(double salary) {
         StringBuffer output = new StringBuffer( String.format("%.2f", salary) );
         int commaNo = (output.length()-4)/3;
@@ -109,6 +130,19 @@ public class Player {
 
     public void print() {
         print(-1);
+    }
+
+    public void transferTo (Club c) {
+        this.getClub().getPlayers().remove(this);
+        this.setClub(c);
+    }
+
+    public boolean isAuctioned() {
+        return this.auctioned;
+    }
+
+    public void setAuctionState (boolean state) {
+        this.auctioned = state;
     }
 
 }

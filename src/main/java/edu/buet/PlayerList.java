@@ -5,12 +5,15 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.Serializable;
 
-public class PlayerList {
+public class PlayerList implements Serializable {
 
     private List<Player> playerList = new ArrayList<Player>();
     private List<Club> clubList = new ArrayList<Club>();
     private List<Country> countryList = new ArrayList<Country>();
+    private Club clientClub = new Club();
+    private List<Player> auctionList = new ArrayList<Player>();
 
     public PlayerList() {}
 
@@ -24,6 +27,18 @@ public class PlayerList {
 
     public List<Country> getCountryList() {
         return countryList;
+    }
+
+    public Club getClientClub() {
+        return clientClub;
+    }
+
+    public List<Player> getAuctionList() {
+        return auctionList;
+    }
+
+    public void setClientClub (Club clientClub) {
+        this.clientClub = clientClub;
     }
 
     public void add (Player p) {
@@ -120,6 +135,7 @@ public class PlayerList {
             p.setPosition(tokens[5]);
             p.setNumber(Integer.parseInt(tokens[6]));
             p.setSalary(Double.parseDouble(tokens[7]));
+            p.setPfp();
             playerList.add(p);
         }
         br.close();

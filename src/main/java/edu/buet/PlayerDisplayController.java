@@ -81,9 +81,10 @@ public class PlayerDisplayController {
         // for (Player p : playerList.get())
         //     playerListView.getItems().add(p.getName());
         // playerListView.setItems( playerListView.getItems().sorted());
-
-        playerListView.setItems( FXCollections.observableArrayList(PlayerList.nameList(playerList.get())));
-        
+        List<Player> list = new ArrayList<>();
+        if (App.getUserMode() == UserMode.GUEST) list = playerList.get();
+        else if (App.getUserMode() == UserMode.LOGGED_IN) list = playerList.getClientClub().getPlayers();
+        playerListView.setItems( FXCollections.observableArrayList(PlayerList.nameList(list)));
 
     }
 
@@ -127,8 +128,8 @@ public class PlayerDisplayController {
         clubLabel.setDisable(false);
         countryLabel.setText(p.getCountry().getName());
         countryLabel.setDisable(false);
-        Image pfp = new Image(getClass().getResourceAsStream("pfp/" + p.getName() + ".png"));
-        playerImage.setImage(pfp);
+        // Image pfp = new Image(getClass().getResourceAsStream("pfp/" + p.getName() + ".png"));
+        playerImage.setImage(p.getPfp());
         //Image cflag = new Image(getClass().getResourceAsStream("cflag/" + p.getCountry().getName() + ".png"));
         countryImage.setImage(p.getCountry().getFlag());
         //Image clublogo = new Image(getClass().getResourceAsStream("clublogo/" + p.getClub().getName() + ".png"));

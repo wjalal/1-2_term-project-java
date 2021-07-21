@@ -22,7 +22,7 @@
                   </Label>
                   <TableView fx:id="salaryTable" prefHeight="500.0" prefWidth="555.0">
                     <columns>
-                        <TableColumn fx:id="logoColumn" maxWidth="1500.0" prefWidth="40.0" />
+                        <TableColumn fx:id="logoColumn" maxWidth="1500.0" prefWidth="40.0" style="-fx-alignment: CENTER;" />
                       <TableColumn fx:id="clubColumn" prefWidth="281.0" style="-fx-alignment: CENTER;" text="Club" />
                       <TableColumn fx:id="salaryColumn" prefWidth="296.0" style="-fx-alignment: CENTER;" text="Salary" />
                     </columns>
