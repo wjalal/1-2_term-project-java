@@ -28,29 +28,13 @@ public class Server {
         }
     }
 
+    public static PlayerList getPlayerList() {
+        return playerList;
+    }
+
     public void serve(Socket clientSocket) throws IOException, ClassNotFoundException {
         NetworkUtil networkUtil = new NetworkUtil(clientSocket);
-        Object o = networkUtil.read();
-        if (o instanceof String && ((String) o).equals("GUEST_ENTRY") ) {
-            playerList.setClientClub(null);
-            networkUtil.write(playerList);
-        } else {
-            LoginCredential clientCredential = (LoginCredential) o;
-            Club clientClub = playerList.getClub(clientCredential.getName());
-            if (clientClub == null) {
-                networkUtil.write("NO_CRED_MATCH");
-                // try {
-                //     networkUtil.closeConnection();
-                // } catch (IOException e) {
-                //     e.printStackTrace();
-                // }
-            } else {
-                clientMap.put(clientClub, networkUtil);
-                playerList.setClientClub(clientClub);
-                networkUtil.write(playerList);
-                new ReadThreadServer(clientMap, networkUtil);
-            }
-        }
+        new ReadThreadServer(clientMap, networkUtil);
     }
 
     public static void main(String args[]) throws Exception {

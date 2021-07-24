@@ -2,22 +2,30 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory?>
+<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane id="VTab" prefHeight="720.0" prefWidth="1280.0" rotateGraphic="true" side="LEFT" stylesheets="@styles/htab.css" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="edu.buet.GuestController">
+<TabPane id="VTab" prefHeight="720.0" prefWidth="1280.0" rotateGraphic="true" side="LEFT" stylesheets="@styles/htab.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.buet.MainController">
   <tabs>
-    <Tab closable="false" text="Search Players">
+    <Tab closable="false" onSelectionChanged="#refreshList" text="Search Players">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -145,17 +153,21 @@
             </AnchorPane>
       </content>
     </Tab>
-    <Tab closable="false" text="Search Clubs">
+    <Tab closable="false" onSelectionChanged="#refreshList" text="Search Clubs">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" spacing="20.0">
                      <children>
-                        <ComboBox fx:id="selectedClub" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="187.0" promptText="Club...">
+                        <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="297.0">
+                           <children>
+                              <Label text="Select club: " />
+                              <ComboBox fx:id="selectedClub" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" prefWidth="187.0" promptText="Club..." />
+                           </children>
                            <VBox.margin>
-                              <Insets left="850.0" />
+                              <Insets left="800.0" />
                            </VBox.margin>
-                        </ComboBox>
+                        </HBox>
                         <TabPane id="HTab" prefHeight="140.0" prefWidth="1240.0" rotateGraphic="true" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
                               <Tab text="Salary statistics">
@@ -288,5 +300,121 @@
             </AnchorPane>
       </content>
     </Tab>
+      <Tab onSelectionChanged="#showAuction" text="Buy from Auction">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab text="Add Player">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1095.0" spacing="20.0">
+                     <children>
+                        <Label alignment="CENTER" text="Add a new player to your club">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="720.0" prefWidth="1097.0" spacing="50.0">
+                           <children>
+                              <GridPane alignment="CENTER" prefHeight="520.0" prefWidth="473.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="109.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="465.0" minWidth="10.0" prefWidth="21.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="465.0" minWidth="10.0" prefWidth="344.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <HBox.margin>
+                                    <Insets bottom="40.0" top="30.0" />
+                                 </HBox.margin>
+                                 <children>
+                                    <Label text="Name" />
+                                    <Label text="Position" GridPane.rowIndex="1" />
+                                    <Label text="Country" GridPane.rowIndex="2" />
+                                    <Label text="Age" GridPane.rowIndex="3" />
+                                    <Label text="Height" GridPane.rowIndex="4" />
+                                    <Label text="Weekly Salary" GridPane.rowIndex="5" />
+                                    <TextField fx:id="addName" prefHeight="40.0" GridPane.columnIndex="2" />
+                                    <ChoiceBox fx:id="addPosition" prefHeight="40.0" prefWidth="398.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="addCountry" editable="true" prefHeight="40.0" prefWidth="398.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Spinner fx:id="addAge" prefHeight="40.0" prefWidth="396.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                       <valueFactory>
+                                          <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" max="150" min="15" />
+                                       </valueFactory>
+                                    </Spinner>
+                                    <Spinner fx:id="addHeight" prefHeight="40.0" prefWidth="396.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                       <valueFactory>
+                                          <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="0.01" max="3.0" min="1.4" />
+                                       </valueFactory>
+                                    </Spinner>
+                                    <Spinner fx:id="addSalary" prefHeight="40.0" prefWidth="396.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                       <valueFactory>
+                                          <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="8000" max="9999999999999999" min="0" />
+                                       </valueFactory>
+                                    </Spinner>
+                                    <Label text=":" GridPane.columnIndex="1" />
+                                    <Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label prefHeight="16.0" prefWidth="0.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                 </children>
+                              </GridPane>
+                              <VBox alignment="CENTER" prefHeight="720.0" prefWidth="401.0" spacing="20.0">
+                                 <children>
+                                    <ImageView fx:id="newPlayerPfp" fitHeight="235.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@pfp/profile.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Button fx:id="addPfp" mnemonicParsing="false" onAction="#addPfpChoose" prefHeight="40.0" text="Select Picture" />
+                                    <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                       <children>
+                                          <Label text="Jersey number :" />
+                                          <Spinner fx:id="addNumber" prefHeight="40.0" prefWidth="231.0">
+                                             <valueFactory>
+                                                <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" max="99" min="1" />
+                                             </valueFactory>
+                                          </Spinner>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets left="80.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets top="25.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Button fx:id="addPfp1" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#submitPlayer" prefHeight="40.0" prefWidth="107.0" text="Submit">
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets top="60.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
   </tabs>
 </TabPane>

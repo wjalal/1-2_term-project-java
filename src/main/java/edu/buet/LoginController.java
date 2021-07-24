@@ -30,6 +30,7 @@ public class LoginController {
                 App.setPlayerList( (PlayerList) o );
                 System.out.println("ok");
                 App.setRoot("signed-in");
+                App.setRtc(new ReadThreadClient(networkUtil));
             }
         } catch (Exception e) {
             System.out.println(e);

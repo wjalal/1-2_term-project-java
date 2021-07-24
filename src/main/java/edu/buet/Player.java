@@ -16,6 +16,7 @@ public class Player implements Serializable {
     private double salary;
     private byte[] pfpBytes;
     private boolean auctioned;
+    private double price;
 
     public Player() {
         this.auctioned = false;
@@ -31,6 +32,19 @@ public class Player implements Serializable {
         this.number = number;
         this.salary = salary;
         this.setPfp();
+        this.auctioned = false;
+    }
+
+    public Player (String name, Country country, int age, double height, Club club, String position, int number, double salary, byte[] pfpBytes) throws Exception {
+        this.name = name;
+        this.country = country;
+        this.age = age;
+        this.height = height;
+        this.club = club;
+        this.position = position;
+        this.number = number;
+        this.salary = salary;
+        this.pfpBytes = pfpBytes;
         this.auctioned = false;
     }
 
@@ -52,6 +66,10 @@ public class Player implements Serializable {
 
     public void setAge (int age) {
         this.age = age;
+    }
+
+    public Player getPlayer() {
+        return this;
     }
 
     public int getAge() {
@@ -98,6 +116,10 @@ public class Player implements Serializable {
         return salary;
     }
 
+    public void setPfpBytes(byte[] pfpBytes) {
+        this.pfpBytes = pfpBytes;
+    }
+
     public void setPfp() throws Exception {
         this.pfpBytes = this.getClass().getResourceAsStream("pfp/" + name + ".png").readAllBytes();
     }
@@ -106,6 +128,14 @@ public class Player implements Serializable {
         InputStream is = new ByteArrayInputStream(pfpBytes); 
         Image pfp = new Image(is);
         return pfp;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public static String showSalary(double salary) {
@@ -133,8 +163,12 @@ public class Player implements Serializable {
     }
 
     public void transferTo (Club c) {
-        this.getClub().getPlayers().remove(this);
-        this.setClub(c);
+        if (this.isAuctioned()) {
+            this.getClub().getPlayers().remove(this);
+            this.setAuctionState(false);
+            this.setClub(c);
+            c.getPlayers().add(this);
+        }
     }
 
     public boolean isAuctioned() {
@@ -145,4 +179,12 @@ public class Player implements Serializable {
         this.auctioned = state;
     }
 
+
+    public String getSalaryLabel() {
+        return Player.showSalary(salary);
+    }
+    
+    public String getPriceLabel() {
+        return Player.showSalary(price);
+    }
 }

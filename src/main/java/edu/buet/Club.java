@@ -53,4 +53,9 @@ public class Club extends Team {
         return logo;
     }
 
+    public boolean containsCountry (Country country) {
+        for (Player p : this.getPlayers()) if (p.getCountry() == country) return true;
+        return false;
+    }
+
 }

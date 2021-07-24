@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 public class Country extends Team {
 
     private byte[] flagBytes;
+    private int countfromclub;
 
     public Country() {
         super();
@@ -43,5 +44,19 @@ public class Country extends Team {
         InputStream is = new ByteArrayInputStream(flagBytes); 
         Image flag = new Image(is);
         return flag;
+    }
+
+    public int getCountFromClub (Club club) {
+        int count = 0;
+        for (Player p : club.getPlayers()) if (p.getCountry() == this) count ++;
+        return count;
+    }
+
+    public int getCountfromclub() {
+        return countfromclub;
+    }
+
+    public void setCountfromclub(int countfromclub) {
+        this.countfromclub = countfromclub;
     }
 }

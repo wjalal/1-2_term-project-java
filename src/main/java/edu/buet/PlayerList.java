@@ -29,6 +29,15 @@ public class PlayerList implements Serializable {
         return countryList;
     }
 
+    public List<Country> getCountryList (Club club) {
+        List<Country> clubCountryList = new ArrayList<>();
+        for (Country c : countryList) if (club.containsCountry(c)) {
+            c.setCountfromclub(c.getCountFromClub(getClientClub()));
+            clubCountryList.add(c);
+        }
+        return clubCountryList;
+    }
+
     public Club getClientClub() {
         return clientClub;
     }
@@ -52,6 +61,13 @@ public class PlayerList implements Serializable {
         return null;
     }
 
+    public Player searchByName (String name, List<Player>playerList) {
+        for (Player p : playerList) {
+            if (p.getName().equalsIgnoreCase(name)) return p;
+        }
+        return null;
+    }
+
     public List<Player> searchByPosition (String position) {
         List<Player> posList = new ArrayList<Player>();
         for (Player p : playerList) {
@@ -61,7 +77,33 @@ public class PlayerList implements Serializable {
         return posList;
     }
 
+    public List<Player> searchByPosition (String position, List<Player>playerList) {
+        List<Player> posList = new ArrayList<Player>();
+        for (Player p : playerList) {
+            if (p.getPosition().equalsIgnoreCase(position)) posList.add(p);
+        }
+        if (posList.size() == 0) return null;
+        return posList;
+    }
+
     public List<Player> searchBySalary (double r1, double r2) {
+        double l, h;
+        if (r2 > r1) {
+            l = r1;
+            h = r2;
+        } else {
+            l = r2;
+            h = r1;
+        }
+        List<Player> salList = new ArrayList<Player>();
+        for (Player p : playerList) {
+            if (p.getSalary() > l && p.getSalary() < h) salList.add(p);
+        }
+        if (salList.size() == 0) return null;
+        return salList;
+    }
+
+    public List<Player> searchBySalary (double r1, double r2, List<Player>playerList) {
         double l, h;
         if (r2 > r1) {
             l = r1;
