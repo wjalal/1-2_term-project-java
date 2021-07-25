@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class LoginCredential implements Serializable {
     private String name;
-    private String password;
+    private String passwordHash;
 
     public LoginCredential() {
 
@@ -12,15 +12,15 @@ public class LoginCredential implements Serializable {
 
     public LoginCredential (String name, String password) {
         this.name = name;
-        this.password = password;
+        this.setPassword(password);;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
     public void setName(String name) {
@@ -28,7 +28,7 @@ public class LoginCredential implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.passwordHash = SHA512.generateSHA512(password);
     }
     
 }

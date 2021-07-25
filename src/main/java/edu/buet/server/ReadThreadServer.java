@@ -1,8 +1,10 @@
 package edu.buet.server;
 
 import edu.buet.PlayerList;
+import edu.buet.SignUpRequest;
 import edu.buet.TransferRequest;
 import edu.buet.Club;
+import edu.buet.Country;
 import edu.buet.LoginCredential;
 import edu.buet.AuctionRequest;
 import edu.buet.AuctionUpdate;
@@ -41,10 +43,14 @@ public class ReadThreadServer implements Runnable {
                         //     e.printStackTrace();
                         // }
                     } else {
-                        clientMap.put(clientClub, networkUtil);
-                        playerList.setClientClub(clientClub);
-                        networkUtil.write(playerList);
-                        
+                        playerList.readCredentialsFromFile();
+                        System.out.println(clientCredential.getPasswordHash() + "\n" + clientClub.getPasswordHash());
+                        if (clientCredential.getPasswordHash().equals(clientClub.getPasswordHash())) {
+                            playerList.resetCredentials();
+                            clientMap.put(clientClub, networkUtil);
+                            playerList.setClientClub(clientClub);
+                            networkUtil.write(playerList);
+                        } else networkUtil.write("NO_CRED_MATCH");
                     }
                 } else if (o instanceof TransferRequest) {
                     TransferRequest req = (TransferRequest) o;
@@ -73,17 +79,39 @@ public class ReadThreadServer implements Runnable {
                     }
                 } else if (o instanceof Player) {
                     Player p = (Player) o;
+                    Country c = playerList.getCountry(p.getCountry().getName());
+                    if (c == null) {
+                        c = new Country();
+                        c.setName(p.getCountry().getName());
+                        c.setFlagBytes(p.getCountry().getFlagBytes());
+                        p.setCountry(c);
+                    }
                     p.setClub(playerList.getClub(p.getClub().getName()));
-                    p.setCountry(playerList.getCountry(p.getCountry().getName()));
+                    p.setCountry(c);
                     playerList.get().add(p);
                     p.getClub().getPlayers().add(p);
                     p.getCountry().getPlayers().add(p);
-                    for (Club c : clientMap.keySet()) {
+                    playerList.getCountryList().add(c);
+                    for (Club cl : clientMap.keySet()) {
                         System.out.println("HELLO2");
                         // AuctionUpdate update = new Update(req);
-                        (clientMap.get(c)).write(p);
+                        (clientMap.get(cl)).write(p);
                         System.out.println("DONE");
                     }
+                } else if (o instanceof SignUpRequest) {
+                    SignUpRequest req = (SignUpRequest) o;
+                    if (playerList.getClub(req.getCredential().getName()) != null) {
+                        networkUtil.write ("CLUB_PRE-EXIST");
+                    } else {
+                        playerList.readFromFile();
+                        Club c = new Club();
+                        c.setName(req.getCredential().getName());
+                        c.setPasswordHash(req.getCredential().getPasswordHash());
+                        c.setLogoBytes(req.getLogoBytes());
+                        playerList.getClubList().add(c);
+                        playerList.setClientClub(c);
+                        networkUtil.write(playerList);
+                    } 
                 }
             }
         } catch (Exception e) {

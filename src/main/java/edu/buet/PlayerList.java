@@ -181,6 +181,27 @@ public class PlayerList implements Serializable {
             playerList.add(p);
         }
         br.close();
+
+    }
+
+    public void readCredentialsFromFile() throws Exception {
+
+        BufferedReader br = new BufferedReader(new FileReader("credentials.txt"));
+
+        while (true) {
+            String line = br.readLine();
+            if (line == null) break;
+            String[] tokens = line.split(",");
+
+            Club club = getClub(tokens[0]);
+            club.setPasswordHash(tokens[1]);
+        }
+
+        br.close();
+    }
+
+    public void resetCredentials() {
+        for (Club c : clubList) c.setPasswordHash(null);
     }
 
     public void saveToFile() throws Exception {

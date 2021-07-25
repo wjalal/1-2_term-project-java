@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane id="VTab" prefHeight="720.0" prefWidth="1280.0" rotateGraphic="true" side="LEFT" stylesheets="@styles/htab.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.buet.MainController">
+<TabPane id="VTab" fx:id="tabPane1" prefHeight="720.0" prefWidth="1280.0" rotateGraphic="true" side="LEFT" stylesheets="@styles/htab.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.buet.MainController">
   <tabs>
     <Tab closable="false" onSelectionChanged="#refreshList" text="Search Players">
       <content>
@@ -305,7 +305,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
         </content>
       </Tab>
-      <Tab text="Add Player">
+      <Tab onSelectionChanged="#refreshList" text="Add Player">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>

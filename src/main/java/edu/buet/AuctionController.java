@@ -110,7 +110,7 @@ public class AuctionController implements Initializable {
             final Button buyButton = new Button("Buy");
             TableCell<Player, Player> cell = new TableCell<Player, Player>() {
                 public void updateItem (Player p, boolean empty) {
-                    if (p != null) buyButton.setOnAction(e -> {
+                    if (p != null && p.getClub() != playerList.getClientClub() ) buyButton.setOnAction(e -> {
                         String message = "Are you sure you want to buy " + p.getName() + " for " + p.getPriceLabel() + "?";
                         if (ConfirmationModal.display("Confirmation", message)) try {
                             networkUtil.write (new TransferRequest(p, playerList.getClientClub()));

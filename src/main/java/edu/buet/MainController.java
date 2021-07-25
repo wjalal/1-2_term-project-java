@@ -11,6 +11,7 @@ import javafx.scene.control.ChoiceBox;
 // import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.FileChooser;
@@ -35,7 +36,7 @@ public class MainController implements Initializable {
     PlayerList playerList = App.getPlayerList();
     List<Club> clubList = playerList.getClubList();
     List<Country> countryList = playerList.getCountryList();
-    byte[] newPlayerPfpBytes;
+    byte[] newPlayerPfpBytes = null, newCountryFlagBytes = null;
 
     @FXML private ComboBox<String> nameSearch, clubSearch, countrySearch, positionSearch, selectedClub;
     @FXML private Spinner<Double> r1Spinner, r2Spinner; 
@@ -49,6 +50,8 @@ public class MainController implements Initializable {
     @FXML private Spinner<Double> addHeight, addSalary;
     @FXML private ImageView newPlayerPfp;
 
+    @FXML private TabPane tabPane1;
+
 
     public void initialize (URL arg0, ResourceBundle arg1) {
         //playerList.readFromFile();
@@ -56,11 +59,35 @@ public class MainController implements Initializable {
 
         playerDisplayPController.loadPlayers();
         playerDisplayCController.loadPlayers();
+        tabPane1.getSelectionModel().select(App.getTabIdx1());
+        System.out.println("SELECTED:  " + tabPane1.getSelectionModel().getSelectedIndex());
         //App.getRtc().setpDisp(playerDisplayPController);
         if (App.getUserMode() == UserMode.GUEST) {
             playerDisplayPController.playerData.getChildren().remove(playerDisplayPController.auctionBox);
             playerDisplayCController.playerData.getChildren().remove(playerDisplayCController.auctionBox);
+        } else if (App.getUserMode()==UserMode.LOGGED_IN) {
+            addCountry.setItems(FXCollections.observableArrayList(Country.nameList(countryList)));
+            addPosition.getItems().addAll("Forward", "Midfielder", "Defender", "Goalkeeper");
+
+            addCountry.getEditor().setOnKeyTyped((e) -> {
+                System.out.println(addCountry.getEditor().getText());
+                if (!addCountry.getEditor().getText().strip().equals("")) {
+                    List<String> predictions = new ArrayList<>();
+                    for (Country p : countryList) 
+                        if ( p.getName().toLowerCase().startsWith(addCountry.getEditor().getText().strip().toLowerCase()) ) {
+                            System.out.println(p.getName());
+                            predictions.add(p.getName());
+                        }
+                    addCountry.setItems(FXCollections.observableArrayList(predictions));
+                    addCountry.hide();
+                } else {
+                    addCountry.setItems(FXCollections.observableArrayList(Country.nameList(countryList)));
+                    addCountry.hide();
+                }
+                addCountry.show();
+            });
         }
+
         clubSearch.setItems(FXCollections.observableArrayList(Club.nameList(clubList)));
         clubSearch.getItems().add(0, "—————————————— Any ——————————————");
         selectedClub.setItems(FXCollections.observableArrayList(Club.nameList(clubList)));
@@ -68,9 +95,6 @@ public class MainController implements Initializable {
         countrySearch.setItems(FXCollections.observableArrayList(Country.nameList(countryList)));
         countrySearch.getItems().add(0, "—————————— Any ——————————");
         positionSearch.getItems().addAll("Forward", "Midfielder", "Defender", "Goalkeeper");
-
-        addCountry.setItems(FXCollections.observableArrayList(Country.nameList(countryList)));
-        addPosition.getItems().addAll("Forward", "Midfielder", "Defender", "Goalkeeper");
 
         // );
         nameSearch.getEditor().setOnKeyTyped((e) -> {
@@ -152,26 +176,10 @@ public class MainController implements Initializable {
             countrySearch.show();
         });
 
-        addCountry.getEditor().setOnKeyTyped((e) -> {
-            System.out.println(addCountry.getEditor().getText());
-            if (!addCountry.getEditor().getText().strip().equals("")) {
-                List<String> predictions = new ArrayList<>();
-                for (Country p : countryList) 
-                    if ( p.getName().toLowerCase().startsWith(addCountry.getEditor().getText().strip().toLowerCase()) ) {
-                        System.out.println(p.getName());
-                        predictions.add(p.getName());
-                    }
-                addCountry.setItems(FXCollections.observableArrayList(predictions));
-                addCountry.hide();
-            } else {
-                addCountry.setItems(FXCollections.observableArrayList(Country.nameList(countryList)));
-                addCountry.hide();
-            }
-            addCountry.show();
-        });
     }
 
     @FXML private void showDemographics() throws IOException {
+        // App.setTabIdx1(tabPane1.getSelectionModel().getSelectedIndex());
         App.setRoot("demographics");
     }
 
@@ -309,28 +317,60 @@ public class MainController implements Initializable {
     }
 
     @FXML private void submitPlayer() throws Exception {
-        if (ConfirmationModal.display("Confirmation", "Do you confirm these attributes to add the new player?")) {
-            Player p = new Player (
-                addName.getText(),
-                playerList.getCountry(addCountry.getValue()),
-                addAge.getValue(),
-                addHeight.getValue(),
-                playerList.getClientClub(),
-                addPosition.getValue(),
-                addNumber.getValue(),
-                addSalary.getValue(),
-                newPlayerPfpBytes
-            );
-            App.getNetworkUtil().write(p);
-            resetAddPlayer();
+        if (addName.getText().strip().isEmpty()) WarningModal.display("Input missing", "Please enter a player name.");
+        else if (addPosition.getSelectionModel().isEmpty()) WarningModal.display("Input missing", "Please choose a position.");
+        else if (addCountry.getSelectionModel().isEmpty() && addCountry.getEditor().getText().isEmpty()) WarningModal.display("Input missing", "Please choose a country.");
+        else if (newPlayerPfpBytes == null)  WarningModal.display("Input missing", "Please choose a picture for the player.");
+        else if (playerList.searchByName(addName.getText()) != null) WarningModal.display("Invalid Name", "A player with this name already exists!");
+        else if (!playerList.getClientClub().isNumberValid(addNumber.getValue())) WarningModal.display("Invalid Number", "A player with this number already exists in the club!");
+        else {
+            if (ConfirmationModal.display("Confirmation", "Do you confirm these attributes to add the new player?")) {
+                boolean continUe = true;
+                Country c = playerList.getCountry(addCountry.getValue());
+                if (c == null) {
+                    WarningModal.display("New country", "The country you entered does not appear in the database.\n" +
+                                            "You will now be prompted to select a picture as the new country's flag.\n" + 
+                                            "(If you wish to cancel then please just choose Cancel in the file dialog.)");
+                    FileChooser flagChooser = new FileChooser();
+                    File flagFile = flagChooser.showOpenDialog(App.getMainStage());
+                    if (flagFile == null) continUe = false;
+                    else {
+                        System.out.println(flagFile.toURI().toString());
+                        // Image pfpImage = new Image(pfpFile.toURI().toString());
+                        // newPlayerPfp.setImage(pfpImage);
+                        newCountryFlagBytes = Files.readAllBytes(flagFile.toPath());
+                        c = new Country();
+                        c.setName(addCountry.getEditor().getText().strip());
+                        c.setFlagBytes(newCountryFlagBytes);
+                    }
+                }
+                if (continUe) {
+                    Player p = new Player (
+                        addName.getText().strip(),
+                        c, addAge.getValue(),
+                        addHeight.getValue(),
+                        playerList.getClientClub(),
+                        addPosition.getValue(),
+                        addNumber.getValue(),
+                        addSalary.getValue(),
+                        newPlayerPfpBytes
+                    );
+                    App.getNetworkUtil().write(p);
+                    resetAddPlayer();
+                }
+            }
         }
     }
 
     @FXML private void refreshList() {
-        playerDisplayCController.loadPlayers();
-        playerDisplayCController.resetPlayerInfo();
-        playerDisplayPController.loadPlayers();
-        playerDisplayPController.resetPlayerInfo();
+            playerDisplayCController.loadPlayers();
+            playerDisplayCController.resetPlayerInfo();
+            playerDisplayPController.loadPlayers();
+            playerDisplayPController.resetPlayerInfo();
+        if (tabPane1.getSelectionModel().getSelectedIndex() != 2) {
+            App.setTabIdx1 (tabPane1.getSelectionModel().getSelectedIndex());
+            System.out.println("SELECTION DONE: " + App.getTabIdx1());
+        }
     }
 
 }

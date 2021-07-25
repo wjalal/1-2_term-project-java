@@ -7,6 +7,7 @@ import java.io.ByteArrayInputStream;
 public class Club extends Team {
 
     private byte[] logoBytes;
+    private String passwordHash;
 
     public Club() {
         super();
@@ -15,6 +16,14 @@ public class Club extends Team {
     public Club(String name) throws Exception {
         super(name);
         this.logoBytes = this.getClass().getResourceAsStream("clublogo/" + this.getName() + ".png").readAllBytes();
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
     public boolean isFull() {
@@ -51,6 +60,10 @@ public class Club extends Team {
         InputStream is = new ByteArrayInputStream(logoBytes); 
         Image logo = new Image(is);
         return logo;
+    }
+
+    public void setLogoBytes(byte[] logoBytes) {
+        this.logoBytes = logoBytes;
     }
 
     public boolean containsCountry (Country country) {

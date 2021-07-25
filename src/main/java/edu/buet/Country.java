@@ -59,4 +59,12 @@ public class Country extends Team {
     public void setCountfromclub(int countfromclub) {
         this.countfromclub = countfromclub;
     }
+
+    public void setFlagBytes(byte[] flagBytes) {
+        this.flagBytes = flagBytes;
+    }
+
+    public byte[] getFlagBytes() {
+        return flagBytes;
+    }
 }

@@ -27,15 +27,23 @@ public class ConfirmationModal {
             window.close();
             response = true;
         });
+        yesButton.setPrefWidth(150);
+
         noButton.setOnAction(e -> {
             window.close();
             response = false;
         });
+        noButton.setPrefWidth(150);
+
+        HBox buttons = new HBox(20);
+        buttons.setAlignment(Pos.CENTER);
+        // buttons.setPadding(new Insets(20, 20, 20, 20));
+        buttons.getChildren().addAll(yesButton, noButton);
 
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20, 20, 20, 20));
-        layout.getChildren().addAll(message, yesButton, noButton);
+        layout.getChildren().addAll(message, buttons);
 
         Scene scene = new Scene(layout);
         window.setScene(scene);

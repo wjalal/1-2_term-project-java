@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 // import java.util.*;
 import java.io.IOException;
+// import org.controlsfx.control.Notifications;
 
 /**
  * JavaFX App
@@ -21,6 +22,7 @@ public class App extends Application {
     // private static Club clientClub = new Club();
     private static UserMode userMode = UserMode.NONE;
     private static boolean uiUpdate = false;
+    private static int tabIdx1 = 0, tabIdx2 = 0;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -89,6 +91,22 @@ public class App extends Application {
     
     static Stage getMainStage() {
         return mainStage;
+    }
+
+    static int getTabIdx1() {
+        return tabIdx1;
+    }
+
+    static int getTabIdx2() {
+        return tabIdx2;
+    }
+
+    static void setTabIdx1(int tabIdx1) {
+        App.tabIdx1 = tabIdx1;
+    }
+
+    static void setTabIdx2(int tabIdx2) {
+        App.tabIdx2 = tabIdx2;
     }
 
     // public static Club getClientClub() {

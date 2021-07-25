@@ -58,11 +58,19 @@ public class ReadThreadClient implements Runnable {
                     playerList.getAuctionList().remove(p);
                 } else if (o instanceof Player) {
                     Player p = (Player) o;
+                    Country c = playerList.getCountry(p.getCountry().getName());
+                    if (c == null) {
+                        c = new Country();
+                        c.setName(p.getCountry().getName());
+                        c.setFlagBytes(p.getCountry().getFlagBytes());
+                        p.setCountry(c);
+                    }
                     p.setClub(playerList.getClub(p.getClub().getName()));
-                    p.setCountry(playerList.getCountry(p.getCountry().getName()));
+                    p.setCountry(c);
                     playerList.get().add(p);
                     p.getClub().getPlayers().add(p);
                     p.getCountry().getPlayers().add(p);
+                    playerList.getCountryList().add(c);
                 }
             }
         } catch (Exception e) {
