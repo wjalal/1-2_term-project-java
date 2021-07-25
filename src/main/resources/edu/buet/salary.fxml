@@ -15,7 +15,7 @@
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <TableView fx:id="salaryTable" prefHeight="500.0" prefWidth="555.0">
+      <TableView fx:id="salaryTable" prefHeight="455.0" prefWidth="860.0">
         <columns>
             <TableColumn fx:id="logoColumn" maxWidth="1500.0" prefWidth="40.0" style="-fx-alignment: CENTER;" />
           <TableColumn fx:id="clubColumn" prefWidth="281.0" style="-fx-alignment: CENTER;" text="Club" />
@@ -28,9 +28,9 @@
             <Insets left="200.0" right="200.0" />
          </VBox.margin>
       </TableView>
-        <Button fx:id="secondaryButton" onAction="#switchToPrimary" text="Back to club statistics" />
+        <Button fx:id="secondaryButton" maxHeight="-Infinity" minHeight="-Infinity" onAction="#switchToPrimary" prefHeight="40.0" text="Back to club statistics" />
     </children>
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="50.0" left="20.0" top="50.0" />
     </padding>
 </VBox>

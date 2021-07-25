@@ -3,6 +3,7 @@ import java.util.*;
 import javafx.scene.image.*;
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
+import java.nio.file.*;
 
 public class Club extends Team {
 
@@ -15,7 +16,7 @@ public class Club extends Team {
 
     public Club(String name) throws Exception {
         super(name);
-        this.logoBytes = this.getClass().getResourceAsStream("clublogo/" + this.getName() + ".png").readAllBytes();
+        this.logoBytes = Files.readAllBytes(Paths.get("clublogo/" + this.getName() + ".png"));
     }
 
     public void setPasswordHash(String passwordHash) {
@@ -64,6 +65,10 @@ public class Club extends Team {
 
     public void setLogoBytes(byte[] logoBytes) {
         this.logoBytes = logoBytes;
+    }
+
+    public byte[] getLogoBytes() {
+        return logoBytes;
     }
 
     public boolean containsCountry (Country country) {

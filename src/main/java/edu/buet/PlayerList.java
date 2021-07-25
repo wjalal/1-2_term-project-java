@@ -5,7 +5,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.Serializable;
+import java.io.File;
+import java.nio.file.*;
 
 public class PlayerList implements Serializable {
 
@@ -211,6 +214,33 @@ public class PlayerList implements Serializable {
                     + "," + s.getPosition() + "," + s.getNumber() + "," + s.getSalary());
             bw.write("\n");
         }
+        bw.close();
+        for (Player s : playerList) {
+            Files.createDirectories(Paths.get("pfp"));
+            Files.write(Paths.get("pfp/" + s.getName() + ".png"), s.getPfpBytes());
+            // try {
+            //     File file = new File("pfp/" + s.getName() + ".png");
+            //     file.createNewFile();
+            //     FileOutputStream stream = new FileOutputStream(file, false);
+            //     stream.write(s.getPfpBytes());
+            //     stream.close();
+            // } catch (Exception e) {
+            //     e.printStackTrace();
+            // }
+        }
+        for (Club c : clubList) {
+            Files.createDirectories(Paths.get("clublogo"));
+            Files.write(Paths.get("clublogo/" + c.getName() + ".png"), c.getLogoBytes());
+        }
+        for (Country c: countryList) {
+            Files.createDirectories(Paths.get("cflag"));
+            Files.write(Paths.get("cflag/" + c.getName() + ".png"), c.getFlagBytes());
+        }
+    }
+
+    public void saveCredentialsToFile() throws Exception {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("credentials.txt"));
+        for (Club c : clubList) bw.write( c.getName() + "," + c.getPasswordHash() + "\n" );
         bw.close();
     }
 

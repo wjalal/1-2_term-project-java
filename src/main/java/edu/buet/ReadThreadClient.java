@@ -71,6 +71,8 @@ public class ReadThreadClient implements Runnable {
                     p.getClub().getPlayers().add(p);
                     p.getCountry().getPlayers().add(p);
                     playerList.getCountryList().add(c);
+                } else if (o instanceof Club) {
+                    playerList.getClubList().add((Club) o);
                 }
             }
         } catch (Exception e) {

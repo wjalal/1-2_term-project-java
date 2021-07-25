@@ -4,6 +4,7 @@ import java.util.*;
 import javafx.scene.image.*;
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
+import java.nio.file.*;
 
 public class Country extends Team {
 
@@ -16,7 +17,7 @@ public class Country extends Team {
 
     public Country(String name) throws Exception {
         super(name);
-        this.flagBytes = this.getClass().getResourceAsStream("cflag/" + this.getName() + ".png").readAllBytes();
+        this.flagBytes = Files.readAllBytes(Paths.get("cflag/" + this.getName() + ".png"));
     }
 
     public List<Player> searchByClubAndCountry (Club club) {

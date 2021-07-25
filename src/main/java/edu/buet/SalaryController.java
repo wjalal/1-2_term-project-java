@@ -54,9 +54,12 @@ public class SalaryController {
             salaryTable.setItems(FXCollections.observableArrayList(clubList));
         } else if (App.getUserMode() == UserMode.LOGGED_IN) {
             vBox.getChildren().remove(salaryTable);
-            title.setText("Total annual salary of " + playerList.getClientClub().getName());
+            title.setText("Total annual salary of " + playerList.getClientClub().getName() + ":");
             salaryLabel.setText(Player.showSalary(playerList.getClientClub().getAnnualSalary()));
+            salaryLabel.setStyle("-fx-font: 50 System");
             vBox.getChildren().add(1, salaryLabel);
+            vBox.setSpacing(70);
+
         }
     } 
 

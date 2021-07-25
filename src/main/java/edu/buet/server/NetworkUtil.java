@@ -38,5 +38,9 @@ public class NetworkUtil {
         ois.close();
         oos.close();
     }
+
+    public Socket getSocket() {
+        return socket;
+    }
 }
 

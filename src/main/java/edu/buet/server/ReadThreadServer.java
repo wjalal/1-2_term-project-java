@@ -93,7 +93,7 @@ public class ReadThreadServer implements Runnable {
                     p.getCountry().getPlayers().add(p);
                     playerList.getCountryList().add(c);
                     for (Club cl : clientMap.keySet()) {
-                        System.out.println("HELLO2");
+                        System.out.println("HELLO3");
                         // AuctionUpdate update = new Update(req);
                         (clientMap.get(cl)).write(p);
                         System.out.println("DONE");
@@ -103,14 +103,22 @@ public class ReadThreadServer implements Runnable {
                     if (playerList.getClub(req.getCredential().getName()) != null) {
                         networkUtil.write ("CLUB_PRE-EXIST");
                     } else {
-                        playerList.readFromFile();
+                        playerList.readCredentialsFromFile();
                         Club c = new Club();
                         c.setName(req.getCredential().getName());
                         c.setPasswordHash(req.getCredential().getPasswordHash());
                         c.setLogoBytes(req.getLogoBytes());
                         playerList.getClubList().add(c);
                         playerList.setClientClub(c);
-                        networkUtil.write(playerList);
+                        playerList.saveCredentialsToFile();
+                        playerList.resetCredentials();
+                        for (Club cl : clientMap.keySet()) {
+                            System.out.println("HELLO4");
+                            // AuctionUpdate update = new Update(req);
+                            (clientMap.get(cl)).write(c);
+                            System.out.println("DONE");
+                        }
+                        networkUtil.write("CLUB_ADD_SUCCESS");
                     } 
                 }
             }

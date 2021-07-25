@@ -65,7 +65,7 @@ public class LoginController {
 
     @FXML private void attemptSignUp() {
         byte[] newClubLogoBytes = null;
-        String msg1 = "Are you sure you want to sign up your club with the name " + username.getText();
+        String msg1 = "Are you sure you want to sign up your club with the name " + username.getText() + "?";
         if ( ConfirmationModal.display("Confirmation", msg1) ) {
             WarningModal.display("Club Logo", "You will now be prompted to upload your club's logo");
             FileChooser logoChooser = new FileChooser();
@@ -82,12 +82,17 @@ public class LoginController {
                     Object o = networkUtil.read();
                     if ( o instanceof String && ((String)o).equals("CLUB_PRE-EXIST") )  
                         WarningModal.display("Sign up Failed", "A club with this name already exists");
-                    else {
-                        App.setUserMode(UserMode.LOGGED_IN);
-                        App.setPlayerList( (PlayerList) o );
-                        System.out.println("ok");
-                        App.setRoot("signed-in");
-                        App.setRtc(new ReadThreadClient(networkUtil));
+                    else if (o instanceof String && ((String)o).equals("CLUB_ADD_SUCCESS")) {
+                        // App.setUserMode(UserMode.LOGGED_IN);
+                        // App.setPlayerList( (PlayerList) o );
+                        // System.out.println("ok");
+                        // App.setRoot("signed-in");
+                        // App.setRtc(new ReadThreadClient(networkUtil));
+                        // if ( ((Club)o).getName().equalsIgnoreCase(username.getText()) ) {
+                            WarningModal.display("Success", "Your account has been created successfully\n" + 
+                                                "The program will be closed now. You may restart the program and log in.");
+                            System.exit(0);
+                        // }
                     }
                 } catch (Exception e) {
                     e.printStackTrace(); 

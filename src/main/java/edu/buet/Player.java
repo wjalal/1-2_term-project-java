@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
 import javafx.scene.image.*;
+import java.nio.file.*;
 
 public class Player implements Serializable {
     private String name;
@@ -121,7 +122,7 @@ public class Player implements Serializable {
     }
 
     public void setPfp() throws Exception {
-        this.pfpBytes = this.getClass().getResourceAsStream("pfp/" + name + ".png").readAllBytes();
+        this.pfpBytes = Files.readAllBytes(Paths.get("pfp/" + this.getName() + ".png"));
     }
 
     public Image getPfp() {
@@ -169,6 +170,10 @@ public class Player implements Serializable {
             this.setClub(c);
             c.getPlayers().add(this);
         }
+    }
+
+    public byte[] getPfpBytes() {
+        return pfpBytes;
     }
 
     public boolean isAuctioned() {

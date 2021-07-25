@@ -32,8 +32,10 @@ public class App extends Application {
             e.consume();
             try {
                 // networkUtil.closeConnection();
-                stage.close();
-                System.exit(0);
+                if (ConfirmationModal.display("Exit Confirmation", "Are you sure you want to exit the program?")) {
+                    stage.close();
+                    System.exit(0);
+                }
             } catch (Exception x) {
                 System.out.println("sorry");
                 x.printStackTrace();

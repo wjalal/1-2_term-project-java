@@ -39,6 +39,31 @@ public class Server {
 
     public static void main(String args[]) throws Exception {
         playerList.readFromFile();
-        new Server();
+        (new Thread() {
+            public void run() {
+                Scanner input = new Scanner(System.in);
+                String text = new String();
+                while (true) {
+                    System.out.println("Prompt:");
+                    text = input.nextLine();
+                    if (text.equalsIgnoreCase("exit")) {
+                        try {
+                            playerList.saveToFile();
+                            System.out.println("Saved successfully");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        input.close();
+                        System.exit(0);
+                    }
+                }
+            }
+        }).start();
+        // (new Thread() {
+        //     public void run() {
+                new Server();
+        //     }
+        // }).r
+        
     }
 }
