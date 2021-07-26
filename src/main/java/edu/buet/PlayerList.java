@@ -185,6 +185,17 @@ public class PlayerList implements Serializable {
         }
         br.close();
 
+        BufferedReader br2 = new BufferedReader(new FileReader("accounts.txt"));
+        while (true) {
+            String line = br2.readLine();
+            if (line == null) break;
+            String[] tokens = line.split(",");
+
+            Club club = getClub(tokens[0]);
+            club.setBalance(Double.parseDouble(tokens[1]));
+        }
+
+        br2.close();
     }
 
     public void readCredentialsFromFile() throws Exception {
@@ -236,6 +247,10 @@ public class PlayerList implements Serializable {
             Files.createDirectories(Paths.get("cflag"));
             Files.write(Paths.get("cflag/" + c.getName() + ".png"), c.getFlagBytes());
         }
+
+        BufferedWriter bw2 = new BufferedWriter(new FileWriter("accounts.txt"));
+        for (Club c : clubList) bw2.write( c.getName() + "," + c.getBalance() + "\n" );
+        bw2.close();
     }
 
     public void saveCredentialsToFile() throws Exception {

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 // import java.util.*;
 import java.io.IOException;
+// import com.sun.javafx.css.StyleManager;
 // import org.controlsfx.control.Notifications;
 
 /**
@@ -23,10 +24,16 @@ public class App extends Application {
     private static UserMode userMode = UserMode.NONE;
     private static boolean uiUpdate = false;
     private static int tabIdx1 = 0, tabIdx2 = 0;
+    private static String theme = "Dark";
+
 
     @Override
     public void start(Stage stage) throws IOException {
+        //Application.setUserAgentStylesheet(getClass().getResource("styles/dark.css").toExternalForm());
+        // StyleManager.getInstance().addUserAgentStylesheet("example.css");
         stage.setTitle("Football Player Database System");
+        stage.setResizable(false);
+        // scene.getStylesheets().add(App.class.getResource("styles/dark.css").toExternalForm());
         scene = new Scene(loadFXML("login"), 1280, 720);
         stage.setOnCloseRequest(e -> {
             e.consume();
@@ -52,6 +59,9 @@ public class App extends Application {
     }
 
     static void setRoot(String fxml) throws IOException {
+        if ( !(App.getTheme().equals("Light")) )
+            scene.getStylesheets().add(App.class.getResource("styles/" + App.getTheme() +  ".css").toExternalForm());
+        else scene.getStylesheets().clear();
         scene.setRoot(loadFXML(fxml));
     }
 
@@ -65,6 +75,10 @@ public class App extends Application {
 
     static NetworkUtil getNetworkUtil() {
         return networkUtil;
+    }
+
+    static void setNetworkUtil(NetworkUtil networkUtil) {
+        App.networkUtil = networkUtil;
     }
 
     static UserMode getUserMode() {
@@ -109,6 +123,14 @@ public class App extends Application {
 
     static void setTabIdx2(int tabIdx2) {
         App.tabIdx2 = tabIdx2;
+    }
+
+    static String getTheme() {
+        return theme;
+    }
+
+    static void setTheme(String theme) {
+        App.theme = theme;
     }
 
     // public static Club getClientClub() {

@@ -5,6 +5,10 @@ import javafx.fxml.FXML;
 // import javafx.fxml.FXMLLoader;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;  
+import javafx.scene.media.MediaPlayer;  
+import javafx.scene.media.MediaView; 
+import javafx.util.Duration;
 // import javafx.scene.control.Label;
 // import javafx.scene.control.ListView;
 // import javafx.scene.image.*;
@@ -14,7 +18,7 @@ import java.net.URL;
 
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
-
+import javafx.scene.input.KeyCode;
 
 
 public class LoginController {
@@ -24,6 +28,31 @@ public class LoginController {
 
     @FXML private TextField username;
     @FXML private PasswordField password;
+    @FXML private MediaView video;
+
+    @FXML protected void initialize() throws Exception {
+
+        username.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) attemptLogin();
+        });
+        password.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) attemptLogin();
+        });
+
+        Media media = new Media(App.class.getResource("media/intro.mp4").toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);  
+        mediaPlayer.setAutoPlay(true);  
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                mediaPlayer.seek(Duration.ZERO);
+                mediaPlayer.play();
+            }
+        }); 
+        video.setMediaPlayer(mediaPlayer); 
+        //mediaPlayer.play();
+
+    }
 
     @FXML private void attemptLogin() {
         try {
@@ -32,10 +61,13 @@ public class LoginController {
             Object o = networkUtil.read();
             if ( o instanceof String && ((String)o).equals("NO_CRED_MATCH") )  
                 WarningModal.display("Login failed", "Sorry, your credentials did not match any existing club.");
+            else if ( o instanceof String && ((String)o).equals("ALREADY_LOGGED_IN") )  
+                WarningModal.display("Login failed", "Sorry, your account is already signed-in to right now.");
             else {
                 App.setUserMode(UserMode.LOGGED_IN);
                 App.setPlayerList( (PlayerList) o );
                 System.out.println("ok");
+                video.getMediaPlayer().stop();
                 App.setRoot("signed-in");
                 App.setRtc(new ReadThreadClient(networkUtil));
             }
@@ -54,6 +86,7 @@ public class LoginController {
             if ( o instanceof PlayerList ) {
                 App.setUserMode(UserMode.GUEST);
                 App.setPlayerList( (PlayerList) o );
+                video.getMediaPlayer().stop();
                 App.setRoot("guest");
             }
         } catch (Exception e) {

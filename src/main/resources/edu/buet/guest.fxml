@@ -10,6 +10,8 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -36,7 +38,14 @@
                                                       <Insets />
                                                    </HBox.margin>
                                                 </ComboBox>
-                                                <Button fx:id="nameSearchButton" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#searchByName" prefHeight="40.0" prefWidth="96.0" text="Search" />
+                                                <Button fx:id="nameSearchButton" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#searchByName" prefHeight="40.0" prefWidth="96.0" text="Search">
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@icons/search.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic></Button>
                                              </children>
                                              <padding>
                                                 <Insets left="5.0" right="5.0" top="30.0" />
@@ -58,7 +67,14 @@
                                                    </HBox.margin>
                                                 </ComboBox>
                                                 <ComboBox fx:id="countrySearch" editable="true" layoutX="15.0" layoutY="40.0" maxHeight="-Infinity" prefHeight="40.0" prefWidth="414.0" promptText="Country..." />
-                                                <Button fx:id="nameSearchButton1" maxHeight="-Infinity" mnemonicParsing="false" onAction="#searchByCountryAndClub" prefHeight="40.0" prefWidth="180.0" text="Search" />
+                                                <Button fx:id="nameSearchButton1" maxHeight="-Infinity" mnemonicParsing="false" onAction="#searchByCountryAndClub" prefHeight="40.0" prefWidth="180.0" text="Search">
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@icons/search.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic></Button>
                                              </children>
                                              <padding>
                                                 <Insets left="5.0" right="5.0" top="30.0" />
@@ -79,7 +95,14 @@
                                                       <Insets left="10.0" />
                                                    </HBox.margin>
                                                 </ComboBox>
-                                                <Button fx:id="nameSearchButton2" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#searchByPosition" prefHeight="40.0" prefWidth="96.0" text="Search" />
+                                                <Button fx:id="nameSearchButton2" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#searchByPosition" prefHeight="40.0" prefWidth="96.0" text="Search">
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@icons/search.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic></Button>
                                              </children>
                                              <padding>
                                                 <Insets left="5.0" right="5.0" top="30.0" />
@@ -115,6 +138,13 @@
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
                                                    </HBox.margin>
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@icons/search.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
                                                 </Button>
                                              </children>
                                              <padding>
@@ -188,7 +218,14 @@
                                                 <Button fx:id="nameSearchButton1" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#searchMaxMinSalary" prefHeight="40.0" prefWidth="96.0" text="Search">
                                                    <HBox.margin>
                                                       <Insets left="10.0" />
-                                                   </HBox.margin></Button>
+                                                   </HBox.margin>
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@icons/search.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic></Button>
                                              </children>
                                              <padding>
                                                 <Insets left="5.0" right="5.0" top="30.0" />
@@ -225,6 +262,13 @@
                                                    <HBox.margin>
                                                       <Insets left="10.0" />
                                                    </HBox.margin>
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@icons/search.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
                                                 </Button>
                                              </children>
                                              <padding>
@@ -262,6 +306,13 @@
                                                    <HBox.margin>
                                                       <Insets left="10.0" />
                                                    </HBox.margin>
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@icons/search.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
                                                 </Button>
                                              </children>
                                              <padding>
@@ -292,5 +343,10 @@
             </AnchorPane>
       </content>
     </Tab>
+      <Tab onSelectionChanged="#logout" text="Sign in as Club">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
   </tabs>
 </TabPane>

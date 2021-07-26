@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -28,7 +30,14 @@
             <Insets left="200.0" right="200.0" />
          </VBox.margin>
       </TableView>
-        <Button fx:id="secondaryButton" maxHeight="-Infinity" minHeight="-Infinity" onAction="#switchToPrimary" prefHeight="40.0" text="Back to club statistics" />
+        <Button fx:id="secondaryButton" maxHeight="-Infinity" minHeight="-Infinity" onAction="#switchToPrimary" prefHeight="40.0" text="Back to club statistics">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/back.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
     </children>
     <padding>
         <Insets bottom="50.0" left="20.0" top="50.0" />

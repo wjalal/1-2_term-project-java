@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="30.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.buet.SettingsController">
+    <children>
+      <Label text="User settings">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <HBox fx:id="hBox" alignment="CENTER" maxWidth="-Infinity" prefHeight="428.0" prefWidth="920.0" spacing="40.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="494.0" prefWidth="1047.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" text="Reset Account Password">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Enter previous password:" />
+                  <PasswordField fx:id="oldPwd" maxWidth="-Infinity" prefHeight="40.0" prefWidth="343.0" />
+                  <Label layoutX="200.0" layoutY="250.0" text="New password:" />
+                  <PasswordField fx:id="newPwd1" layoutX="112.0" layoutY="296.0" maxWidth="-Infinity" prefHeight="40.0" prefWidth="343.0" />
+                  <Label layoutX="200.0" layoutY="300.0" text="Re-enter new password" />
+                  <PasswordField fx:id="newPwd2" layoutX="112.0" layoutY="346.0" maxWidth="-Infinity" prefHeight="40.0" prefWidth="343.0" />
+                  <Button mnemonicParsing="false" onAction="#resetPassword" prefHeight="40.0" prefWidth="82.0" text="Reset" />
+               </children>
+            </VBox>
+            <VBox fx:id="clubTableVBox" alignment="CENTER" prefHeight="494.0" prefWidth="1061.0" spacing="30.0">
+               <children>
+                  <Label alignment="CENTER" text="App Theme">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="themeSelector" onAction="#updateTheme" prefHeight="40.0" prefWidth="331.0" />
+                  <Label disable="true" prefHeight="32.0" prefWidth="290.0" text="The new theme will take effect after leaving the settings menu." textAlignment="CENTER" wrapText="true" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets left="40.0" right="40.0" />
+         </VBox.margin>
+      </HBox>
+        <Button fx:id="secondaryButton" onAction="#switchToPrimary" prefHeight="40.0" text="Back to Main View">
+         <graphic>
+            <ImageView fx:id="clubTable" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/back.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+    </children>
+    <padding>
+        <Insets bottom="30.0" left="20.0" right="20.0" top="30.0" />
+    </padding>
+</VBox>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -8,69 +10,79 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="30.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.buet.LoginController">
+
+<StackPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.buet.LoginController">
    <children>
-      <Label text="Log In">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Label>
-      <GridPane maxWidth="-Infinity" prefHeight="100.0" prefWidth="440.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="632.0" minWidth="10.0" prefWidth="146.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1111.0" minWidth="10.0" prefWidth="18.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1111.0" minWidth="10.0" prefWidth="277.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <MediaView fx:id="video" fitHeight="720.0" fitWidth="1280.0">
+         <viewport>
+            <Rectangle2D height="720.0" width="1280.0" />
+         </viewport>
+      </MediaView>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="325.0" prefWidth="599.0" spacing="10.0" style="-fx-background-color: rgba(0,0,0,0.52); -fx-background-radius: 10;">
          <children>
-            <Label prefHeight="21.0" prefWidth="164.0" text="Club username ">
+            <GridPane maxWidth="-Infinity" prefHeight="100.0" prefWidth="496.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="632.0" minWidth="10.0" prefWidth="146.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1111.0" minWidth="10.0" prefWidth="18.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1111.0" minWidth="10.0" prefWidth="277.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label prefHeight="21.0" prefWidth="164.0" text="Club username " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Password" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="username" prefHeight="40.0" prefWidth="406.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 5;" GridPane.columnIndex="2" />
+                  <Label layoutX="10.0" layoutY="15.0" prefWidth="216.0" text=":" textFill="WHITE" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="74.0" layoutY="15.0" prefWidth="216.0" text=":" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="password" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 5;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <HBox alignment="CENTER" prefHeight="49.0" prefWidth="552.0" spacing="10.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#attemptLogin" prefHeight="40.0" style="-fx-border-width: 2.5;" stylesheets="@styles/login.css" text="Sign In" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="607.0" layoutY="31.0" mnemonicParsing="false" onAction="#attemptSignUp" prefHeight="40.0" stylesheets="@styles/login.css" text="Sign Up as New Club" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <Button layoutX="607.0" layoutY="447.0" mnemonicParsing="false" onAction="#attemptGuest" prefHeight="40.0" stylesheets="@styles/login.css" text="Enter as Guest Viewer" textFill="WHITE">
                <font>
                   <Font size="18.0" />
-               </font>
-            </Label>
-            <Label text="Password" GridPane.rowIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="username" prefHeight="40.0" prefWidth="406.0" GridPane.columnIndex="2" />
-            <Label layoutX="10.0" layoutY="15.0" prefWidth="216.0" text=":" GridPane.columnIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="74.0" layoutY="15.0" prefWidth="216.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="password" prefHeight="40.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-         </children>
-      </GridPane>
-      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="1280.0" spacing="10.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#attemptLogin" text="Sign In">
-               <font>
-                  <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="607.0" layoutY="31.0" mnemonicParsing="false" onAction="#attemptSignUp" text="Sign Up as New Club">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
          </children>
-      </HBox>
-      <Button layoutX="607.0" layoutY="447.0" mnemonicParsing="false" onAction="#attemptGuest" text="Enter as Guest Viewer">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
+      </VBox>
    </children>
-</VBox>
+</StackPane>

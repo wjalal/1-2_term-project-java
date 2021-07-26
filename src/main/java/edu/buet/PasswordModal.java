@@ -15,6 +15,7 @@ public class PasswordModal {
     public static String display () {
 
         Stage window = new Stage();
+        window.setResizable(false);
         PasswordField password = new PasswordField();
         Button okButton = new Button("Ok");
 

@@ -13,6 +13,7 @@ public class WarningModal {
     public static void display (String title, String warning) {
 
         Stage window = new Stage();
+        window.setResizable(false);
         Button closeButton = new Button("Close");
 
         window.initModality(Modality.APPLICATION_MODAL);

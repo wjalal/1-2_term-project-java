@@ -9,6 +9,7 @@ public class Club extends Team {
 
     private byte[] logoBytes;
     private String passwordHash;
+    private double balance;
 
     public Club() {
         super();
@@ -74,6 +75,14 @@ public class Club extends Team {
     public boolean containsCountry (Country country) {
         for (Player p : this.getPlayers()) if (p.getCountry() == country) return true;
         return false;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
 }

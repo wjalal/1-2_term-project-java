@@ -15,6 +15,7 @@ public class ConfirmationModal {
     public static boolean display (String title, String warning) {
 
         Stage window = new Stage();
+        window.setResizable(false);
         Button yesButton = new Button("Yes");
         Button noButton = new Button("Cancel");
 

@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -37,9 +39,16 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-        <Button fx:id="secondaryButton" onAction="#switchToPrimary" text="Back to Info Center" />
+        <Button fx:id="secondaryButton" maxHeight="-Infinity" minHeight="-Infinity" onAction="#switchToPrimary" prefHeight="40.0" text="Back to Main View">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/back.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
     </children>
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="20.0" left="20.0" right="20.0" top="30.0" />
     </padding>
 </VBox>

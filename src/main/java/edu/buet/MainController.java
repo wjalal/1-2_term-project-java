@@ -15,12 +15,14 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.FileChooser;
-// import javafx.scene.control.Label;
+import javafx.scene.control.Label;
 // import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.*;
 
 import java.util.*;
+
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 
 public class MainController implements Initializable {
@@ -48,7 +50,8 @@ public class MainController implements Initializable {
     @FXML private ComboBox<String> addCountry;
     @FXML private Spinner<Integer> addAge, addNumber;
     @FXML private Spinner<Double> addHeight, addSalary;
-    @FXML private ImageView newPlayerPfp;
+    @FXML private ImageView newPlayerPfp, clubLogoDisplay;
+    @FXML private Label clubNameDisplay, clubBalanceDisplay;
 
     @FXML private TabPane tabPane1;
 
@@ -59,16 +62,44 @@ public class MainController implements Initializable {
 
         playerDisplayPController.loadPlayers();
         playerDisplayCController.loadPlayers();
+                
         tabPane1.getSelectionModel().select(App.getTabIdx1());
         System.out.println("SELECTED:  " + tabPane1.getSelectionModel().getSelectedIndex());
         //App.getRtc().setpDisp(playerDisplayPController);
         if (App.getUserMode() == UserMode.GUEST) {
+
             playerDisplayPController.playerData.getChildren().remove(playerDisplayPController.auctionBox);
             playerDisplayCController.playerData.getChildren().remove(playerDisplayCController.auctionBox);
+            selectedClub.setItems(FXCollections.observableArrayList(Club.nameList(clubList)));
+            selectedClub.getSelectionModel().select(0);
+
+            selectedClub.getEditor().setOnKeyTyped((e) -> {
+                System.out.println(selectedClub.getEditor().getText());
+                if (!selectedClub.getEditor().getText().strip().equals("")) {
+                    List<String> predictions = new ArrayList<>();
+                    for (Club p : clubList) 
+                        if ( p.getName().toLowerCase().startsWith(selectedClub.getEditor().getText().strip().toLowerCase()) ) {
+                            System.out.println(p.getName());
+                            predictions.add(p.getName());
+                        }
+                    selectedClub.setItems(FXCollections.observableArrayList(predictions));
+                    selectedClub.hide();
+                } else {
+                    selectedClub.setItems(FXCollections.observableArrayList(Club.nameList(clubList)));
+                    selectedClub.hide();
+                }
+                selectedClub.show();
+            });
+
         } else if (App.getUserMode()==UserMode.LOGGED_IN) {
+
+            clubNameDisplay.textProperty().bind(new SimpleStringProperty(playerList.getClientClub().getName()));
+            clubBalanceDisplay.textProperty().bind(new SimpleStringProperty(Player.showSalary(playerList.getClientClub().getBalance())));
+            clubLogoDisplay.setImage(playerList.getClientClub().getLogo());
+
             addCountry.setItems(FXCollections.observableArrayList(Country.nameList(countryList)));
             addPosition.getItems().addAll("Forward", "Midfielder", "Defender", "Goalkeeper");
-
+            
             addCountry.getEditor().setOnKeyTyped((e) -> {
                 System.out.println(addCountry.getEditor().getText());
                 if (!addCountry.getEditor().getText().strip().equals("")) {
@@ -86,12 +117,11 @@ public class MainController implements Initializable {
                 }
                 addCountry.show();
             });
+
         }
 
         clubSearch.setItems(FXCollections.observableArrayList(Club.nameList(clubList)));
         clubSearch.getItems().add(0, "—————————————— Any ——————————————");
-        selectedClub.setItems(FXCollections.observableArrayList(Club.nameList(clubList)));
-        selectedClub.getSelectionModel().select(0);
         countrySearch.setItems(FXCollections.observableArrayList(Country.nameList(countryList)));
         countrySearch.getItems().add(0, "—————————— Any ——————————");
         positionSearch.getItems().addAll("Forward", "Midfielder", "Defender", "Goalkeeper");
@@ -118,8 +148,8 @@ public class MainController implements Initializable {
         if (App.getUserMode()==UserMode.LOGGED_IN) {
             clubSearch.setValue(playerList.getClientClub().getName());
             clubSearch.setDisable(true);
-            selectedClub.setValue(playerList.getClientClub().getName());
-            selectedClub.setDisable(true);
+            // selectedClub.setValue(playerList.getClientClub().getName());
+            // selectedClub.setDisable(true);
         } else {
             clubSearch.getEditor().setOnKeyTyped((e) -> {
                 System.out.println(clubSearch.getEditor().getText());
@@ -139,23 +169,6 @@ public class MainController implements Initializable {
                 clubSearch.show();
             });
 
-            selectedClub.getEditor().setOnKeyTyped((e) -> {
-                System.out.println(selectedClub.getEditor().getText());
-                if (!selectedClub.getEditor().getText().strip().equals("")) {
-                    List<String> predictions = new ArrayList<>();
-                    for (Club p : clubList) 
-                        if ( p.getName().toLowerCase().startsWith(selectedClub.getEditor().getText().strip().toLowerCase()) ) {
-                            System.out.println(p.getName());
-                            predictions.add(p.getName());
-                        }
-                    selectedClub.setItems(FXCollections.observableArrayList(predictions));
-                    selectedClub.hide();
-                } else {
-                    selectedClub.setItems(FXCollections.observableArrayList(Club.nameList(clubList)));
-                    selectedClub.hide();
-                }
-                selectedClub.show();
-            });
         }
 
         countrySearch.getEditor().setOnKeyTyped((e) -> {
@@ -251,7 +264,9 @@ public class MainController implements Initializable {
     }
 
     @FXML private void searchMaxMinSalary() {
-        Club club = playerList.getClub(selectedClub.getValue().strip());
+        Club club = new Club();
+        if (App.getUserMode() == UserMode.GUEST) club = playerList.getClub(selectedClub.getValue().strip());
+        else if (App.getUserMode() == UserMode.LOGGED_IN) club = playerList.getClientClub();
         List<Player> result = new ArrayList<>();
         System.out.println(((RadioButton) salaryMaxMin.getSelectedToggle()).getText());
         if ( ((RadioButton) salaryMaxMin.getSelectedToggle()).getText().equals("MAX") ) result = club.getMaxSalary();
@@ -263,7 +278,9 @@ public class MainController implements Initializable {
     }
 
     @FXML private void searchMaxMinAge() {
-        Club club = playerList.getClub(selectedClub.getValue().strip());
+        Club club = new Club();
+        if (App.getUserMode() == UserMode.GUEST) club = playerList.getClub(selectedClub.getValue().strip());
+        else if (App.getUserMode() == UserMode.LOGGED_IN) club = playerList.getClientClub();
         List<Player> result = new ArrayList<>();
         System.out.println(((RadioButton) ageMaxMin.getSelectedToggle()).getText());
         if ( ((RadioButton) ageMaxMin.getSelectedToggle()).getText().equals("MAX") ) result = club.getMaxAge();
@@ -275,7 +292,9 @@ public class MainController implements Initializable {
     }
 
     @FXML private void searchMaxMinHeight() {
-        Club club = playerList.getClub(selectedClub.getValue().strip());
+        Club club = new Club();
+        if (App.getUserMode() == UserMode.GUEST) club = playerList.getClub(selectedClub.getValue().strip());
+        else if (App.getUserMode() == UserMode.LOGGED_IN) club = playerList.getClientClub();
         List<Player> result = new ArrayList<>();
         System.out.println(((RadioButton) heightMaxMin.getSelectedToggle()).getText());
         if ( ((RadioButton) heightMaxMin.getSelectedToggle()).getText().equals("MAX") ) result = club.getMaxHeight();
@@ -292,6 +311,18 @@ public class MainController implements Initializable {
 
     @FXML private void showAuction() throws IOException {
         App.setRoot("auction");
+    }
+
+    @FXML private void showSettings() throws IOException {
+        App.setRoot("settings");
+    }
+
+    @FXML private void logout() throws IOException {
+        if ( ConfirmationModal.display("Sign-out Confirmation", "Are you sure you want to sign out?") )  {
+            App.getNetworkUtil().closeConnection();
+            App.setNetworkUtil(new NetworkUtil("127.0.0.1", 33333));
+            App.setRoot("login");
+        } else if (App.getUserMode() == UserMode.GUEST) App.setRoot("guest");
     }
 
     @FXML private void addPfpChoose() throws Exception {

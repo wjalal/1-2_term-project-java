@@ -6,6 +6,7 @@ import edu.buet.TransferRequest;
 import edu.buet.Club;
 import edu.buet.Country;
 import edu.buet.LoginCredential;
+import edu.buet.PasswordUpdateRequest;
 import edu.buet.AuctionRequest;
 import edu.buet.AuctionUpdate;
 import edu.buet.Player;
@@ -35,22 +36,25 @@ public class ReadThreadServer implements Runnable {
                 } else if (o instanceof LoginCredential) {
                     LoginCredential clientCredential = (LoginCredential) o;
                     Club clientClub = playerList.getClub(clientCredential.getName());
-                    if (clientClub == null) {
-                        networkUtil.write("NO_CRED_MATCH");
-                        // try {
-                        //     networkUtil.closeConnection();
-                        // } catch (IOException e) {
-                        //     e.printStackTrace();
-                        // }
-                    } else {
-                        playerList.readCredentialsFromFile();
-                        System.out.println(clientCredential.getPasswordHash() + "\n" + clientClub.getPasswordHash());
-                        if (clientCredential.getPasswordHash().equals(clientClub.getPasswordHash())) {
-                            playerList.resetCredentials();
-                            clientMap.put(clientClub, networkUtil);
-                            playerList.setClientClub(clientClub);
-                            networkUtil.write(playerList);
-                        } else networkUtil.write("NO_CRED_MATCH");
+                    if (clientMap.containsKey(clientClub)) networkUtil.write("ALREADY_LOGGED_IN");
+                    else {
+                        if (clientClub == null) {
+                            networkUtil.write("NO_CRED_MATCH");
+                            // try {
+                            //     networkUtil.closeConnection();
+                            // } catch (IOException e) {
+                            //     e.printStackTrace();
+                            // }
+                        } else {
+                            playerList.readCredentialsFromFile();
+                            System.out.println(clientCredential.getPasswordHash() + "\n" + clientClub.getPasswordHash());
+                            if (clientCredential.getPasswordHash().equals(clientClub.getPasswordHash())) {
+                                playerList.resetCredentials();
+                                clientMap.put(clientClub, networkUtil);
+                                playerList.setClientClub(clientClub);
+                                networkUtil.write(playerList);
+                            } else networkUtil.write("NO_CRED_MATCH");
+                        }
                     }
                 } else if (o instanceof TransferRequest) {
                     TransferRequest req = (TransferRequest) o;
@@ -108,6 +112,7 @@ public class ReadThreadServer implements Runnable {
                         c.setName(req.getCredential().getName());
                         c.setPasswordHash(req.getCredential().getPasswordHash());
                         c.setLogoBytes(req.getLogoBytes());
+                        c.setBalance(250000000.0);
                         playerList.getClubList().add(c);
                         playerList.setClientClub(c);
                         playerList.saveCredentialsToFile();
@@ -120,6 +125,16 @@ public class ReadThreadServer implements Runnable {
                         }
                         networkUtil.write("CLUB_ADD_SUCCESS");
                     } 
+                } else if (o instanceof PasswordUpdateRequest) {
+                    PasswordUpdateRequest req = (PasswordUpdateRequest) o;
+                    Club club = playerList.getClub(req.getClub().getName());
+                    playerList.readCredentialsFromFile();
+                    if ( club.getPasswordHash().equals(req.getOldPwdHash()) ) {
+                        club.setPasswordHash(req.getNewPwdHash());
+                        networkUtil.write ("PWD_RESET_SUCCESS");
+                    } else networkUtil.write ("OLD_PWD_NOT_MATCH");
+                    playerList.saveCredentialsToFile();
+                    playerList.resetCredentials();
                 }
             }
         } catch (Exception e) {

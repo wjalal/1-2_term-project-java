@@ -1,0 +1,7 @@
+Manchester United,2.5E8
+Manchester City,2.5E8
+Chelsea,2.5056E8
+Arsenal,2.5024E8
+Everton,24900.0
+Liverpool,2.4979E8
+Juventus,2.5E8

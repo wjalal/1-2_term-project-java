@@ -165,9 +165,11 @@ public class Player implements Serializable {
 
     public void transferTo (Club c) {
         if (this.isAuctioned()) {
+            this.getClub().setBalance (this.club.getBalance() + this.price);
             this.getClub().getPlayers().remove(this);
             this.setAuctionState(false);
             this.setClub(c);
+            this.getClub().setBalance (this.club.getBalance() - this.price);
             c.getPlayers().add(this);
         }
     }

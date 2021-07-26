@@ -111,13 +111,18 @@ public class AuctionController implements Initializable {
             TableCell<Player, Player> cell = new TableCell<Player, Player>() {
                 public void updateItem (Player p, boolean empty) {
                     if (p != null && p.getClub() != playerList.getClientClub() ) buyButton.setOnAction(e -> {
-                        String message = "Are you sure you want to buy " + p.getName() + " for " + p.getPriceLabel() + "?";
-                        if (ConfirmationModal.display("Confirmation", message)) try {
-                            networkUtil.write (new TransferRequest(p, playerList.getClientClub()));
-                            switchToPrimary();
-                        } catch (Exception x) {
-                            System.out.println(x);
-                            x.printStackTrace();
+                        if (p.getPrice() <= playerList.getClientClub().getBalance()) {
+                            String message = "Are you sure you want to buy " + p.getName() + " for " + p.getPriceLabel() + "?";
+                            if (ConfirmationModal.display("Confirmation", message)) try {
+                                networkUtil.write (new TransferRequest(p, playerList.getClientClub()));
+                                switchToPrimary();
+                            } catch (Exception x) {
+                                System.out.println(x);
+                                x.printStackTrace();
+                            }
+                        } else {
+                            WarningModal.display("Transfer faield", "Your club's funds are insufficient for this transfer." + 
+                                                                    "\nPlease source funds and ask the administrator to update your data.");
                         }
                     });
                     else buyButton.setVisible(false);

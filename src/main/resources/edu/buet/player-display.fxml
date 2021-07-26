@@ -24,6 +24,13 @@
                <VBox.margin>
                   <Insets top="15.0" />
                </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/refresh.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
          <HBox.margin>
@@ -90,7 +97,7 @@
             </HBox>
             <HBox fx:id="playerData" alignment="CENTER" prefWidth="200.0" spacing="40.0">
                <children>
-                  <GridPane alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" prefHeight="165.0" prefWidth="500.0">
+                  <GridPane alignment="CENTER" maxHeight="-Infinity" prefHeight="165.0" prefWidth="500.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="156.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="208.0" />
@@ -103,70 +110,82 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label text="Age">
+                        <Label alignment="CENTER" prefHeight="419.0" prefWidth="701.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);" text="Age" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="287.0" prefWidth="516.0" style="-fx-background-color: rgba(0, 0, 0, 0.1);" text="Height" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Label text="Height" GridPane.rowIndex="1">
+                        <Label alignment="CENTER" prefHeight="400.0" prefWidth="911.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);" text="Number" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Label text="Number" GridPane.rowIndex="2">
+                        <Label alignment="CENTER" prefHeight="304.0" prefWidth="779.0" style="-fx-background-color: rgba(0, 0, 0, 0.1);" text="Position" GridPane.rowIndex="3">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Label text="Position" GridPane.rowIndex="3">
+                        <Label alignment="CENTER" prefHeight="333.0" prefWidth="953.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);" text="Salary" GridPane.rowIndex="4">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Label text="Salary" GridPane.rowIndex="4">
+                        <Label fx:id="ageLabel" disable="true" prefHeight="174.0" prefWidth="397.0" style="-fx-background-color: rgba(0, 0, 0, 0.075);" text="No data selected" GridPane.columnIndex="1">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
+                           <padding>
+                              <Insets left="35.0" />
+                           </padding>
                         </Label>
-                        <Label fx:id="ageLabel" disable="true" text="No data selected" GridPane.columnIndex="1">
+                        <Label fx:id="heightLabel" disable="true" layoutX="362.0" layoutY="17.0" prefHeight="71.0" prefWidth="270.0" style="-fx-background-color: rgba(0, 0, 0, 0.15);" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
+                           <padding>
+                              <Insets left="35.0" />
+                           </padding>
                         </Label>
-                        <Label fx:id="heightLabel" disable="true" layoutX="362.0" layoutY="17.0" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="numberLabel" disable="true" prefHeight="74.0" prefWidth="286.0" style="-fx-background-color: rgba(0, 0, 0, 0.075);" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
+                           <padding>
+                              <Insets left="35.0" />
+                           </padding>
                         </Label>
-                        <Label fx:id="numberLabel" disable="true" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="positionLabel" disable="true" prefHeight="70.0" prefWidth="277.0" style="-fx-background-color: rgba(0, 0, 0, 0.15);" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
+                           <padding>
+                              <Insets left="35.0" />
+                           </padding>
                         </Label>
-                        <Label fx:id="positionLabel" disable="true" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="salaryLabel" disable="true" prefHeight="93.0" prefWidth="292.0" style="-fx-background-color: rgba(0, 0, 0, 0.075);" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <GridPane.margin>
-                              <Insets left="20.0" />
+                              <Insets />
                            </GridPane.margin>
-                        </Label>
-                        <Label fx:id="salaryLabel" disable="true" text="No data selected" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
+                           <padding>
+                              <Insets left="35.0" />
+                           </padding>
                         </Label>
                      </children>
                      <opaqueInsets>
@@ -186,8 +205,15 @@
                         </Spinner>
                         <Button fx:id="auctionButton" mnemonicParsing="false" onAction="#auctionPlayer" text="Auction">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="15.0" />
                            </font>
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/auction.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
                      </children>
                   </VBox>

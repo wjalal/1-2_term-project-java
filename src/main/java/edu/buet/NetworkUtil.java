@@ -39,5 +39,17 @@ public class NetworkUtil {
         oos.close();        
         // socket.close();
     }
+
+    public ObjectInputStream getOis() {
+        return ois;
+    }
+
+    public ObjectOutputStream getOos() {
+        return oos;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
 }
 
