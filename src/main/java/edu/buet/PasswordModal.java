@@ -43,6 +43,9 @@ public class PasswordModal {
         layout.getChildren().addAll(message, buttons);
 
         Scene scene = new Scene(layout);
+        if ( !(App.getTheme().equals("Light")) )
+            scene.getStylesheets().add(App.class.getResource("styles/" + App.getTheme() +  ".css").toExternalForm());
+        else scene.getStylesheets().clear();
         window.setScene(scene);
         window.showAndWait();
 

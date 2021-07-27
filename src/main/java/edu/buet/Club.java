@@ -10,6 +10,7 @@ public class Club extends Team {
     private byte[] logoBytes;
     private String passwordHash;
     private double balance;
+    private String theme = "Dark";
 
     public Club() {
         super();
@@ -83,6 +84,14 @@ public class Club extends Team {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+    
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
 }

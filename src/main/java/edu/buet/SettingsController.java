@@ -53,7 +53,12 @@ public class SettingsController {
     }
 
     @FXML private void updateTheme() {
-        App.setTheme( themeSelector.getSelectionModel().getSelectedItem() );
+        try {
+            networkUtil.write ( new ThemeUpdateRequest (playerList.getClientClub(), themeSelector.getSelectionModel().getSelectedItem()) );
+        } catch (Exception e) {
+            WarningModal.display("Setting Failed", "Sorry, could not update your data on the server.");
+            e.printStackTrace();
+        }
     }
 
     @FXML private void switchToPrimary() throws Exception {

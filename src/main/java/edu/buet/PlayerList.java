@@ -193,9 +193,23 @@ public class PlayerList implements Serializable {
 
             Club club = getClub(tokens[0]);
             club.setBalance(Double.parseDouble(tokens[1]));
+            club.setTheme(tokens[2]);
+            System.out.println(club + ": " + club.getTheme());
         }
-
         br2.close();
+
+        BufferedReader br3 = new BufferedReader(new FileReader("auction-list.txt"));
+        while (true) {
+            String line = br3.readLine();
+            if (line == null) break;
+            String[] tokens = line.split(",");
+
+            Player p = searchByName(tokens[0]);
+            auctionList.add(p);
+            p.setAuctionState(true);
+            p.setPrice(Double.parseDouble(tokens[1]));
+        }
+        br3.close();
     }
 
     public void readCredentialsFromFile() throws Exception {
@@ -249,8 +263,12 @@ public class PlayerList implements Serializable {
         }
 
         BufferedWriter bw2 = new BufferedWriter(new FileWriter("accounts.txt"));
-        for (Club c : clubList) bw2.write( c.getName() + "," + c.getBalance() + "\n" );
+        for (Club c : clubList) bw2.write( c.getName() + "," + c.getBalance() + "," + c.getTheme() + "\n" );
         bw2.close();
+
+        BufferedWriter bw3 = new BufferedWriter(new FileWriter("auction-list.txt"));
+        for (Player p : auctionList) bw3.write( p.getName() + "," + p.getPrice() + "\n" );
+        bw3.close();
     }
 
     public void saveCredentialsToFile() throws Exception {

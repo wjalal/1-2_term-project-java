@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 // import java.util.*;
 import java.io.IOException;
+import javafx.scene.image.*;
 // import com.sun.javafx.css.StyleManager;
 // import org.controlsfx.control.Notifications;
 
@@ -31,10 +32,11 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         //Application.setUserAgentStylesheet(getClass().getResource("styles/dark.css").toExternalForm());
         // StyleManager.getInstance().addUserAgentStylesheet("example.css");
-        stage.setTitle("Football Player Database System");
+        stage.setTitle("Football Club Database System");
         stage.setResizable(false);
         // scene.getStylesheets().add(App.class.getResource("styles/dark.css").toExternalForm());
         scene = new Scene(loadFXML("login"), 1280, 720);
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("icons/app.png")));
         stage.setOnCloseRequest(e -> {
             e.consume();
             try {

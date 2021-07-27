@@ -73,6 +73,11 @@ public class ReadThreadClient implements Runnable {
                     playerList.getCountryList().add(c);
                 } else if (o instanceof Club) {
                     playerList.getClubList().add((Club) o);
+                } else if (o instanceof ThemeUpdateRequest) {
+                    ThemeUpdateRequest req = (ThemeUpdateRequest) o;
+                    Club c = playerList.getClub(req.getClub().getName());
+                    c.setTheme(req.getTheme());
+                    App.setTheme( req.getTheme() );
                 }
             }
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package edu.buet.server;
 
 import edu.buet.PlayerList;
 import edu.buet.SignUpRequest;
+import edu.buet.ThemeUpdateRequest;
 import edu.buet.TransferRequest;
 import edu.buet.Club;
 import edu.buet.Country;
@@ -135,6 +136,11 @@ public class ReadThreadServer implements Runnable {
                     } else networkUtil.write ("OLD_PWD_NOT_MATCH");
                     playerList.saveCredentialsToFile();
                     playerList.resetCredentials();
+                } else if (o instanceof ThemeUpdateRequest) {
+                    ThemeUpdateRequest req = (ThemeUpdateRequest) o;
+                    Club c = playerList.getClub(req.getClub().getName());
+                    c.setTheme(req.getTheme());
+                    networkUtil.write(req);
                 }
             }
         } catch (Exception e) {

@@ -2,7 +2,7 @@ David de Gea,Spain,30,1.92,Manchester United,Goalkeeper,1,375000.0
 Harry Maguire,England,28,1.94,Manchester United,Defender,5,189904.0
 Paul Pogba,France,28,1.91,Manchester United,Midfielder,6,290000.0
 Bruno Fernandes,Portugal,26,1.79,Manchester United,Midfielder,18,180000.0
-Edinson Cavani,Uruguay,34,1.84,Manchester United,Forward,7,210000.0
+Edinson Cavani,Uruguay,34,1.84,Juventus,Forward,7,210000.0
 Ederson,Brazil,27,1.88,Manchester City,Goalkeeper,31,65000.0
 Ruben Dias,Portugal,24,1.86,Manchester City,Defender,3,115385.0
 Kevin De Bruyne,Belgium,29,1.81,Manchester City,Midfielder,17,385000.0
@@ -19,10 +19,10 @@ Jordan Henderson,England,30,1.82,Liverpool,Midfielder,14,140000.0
 Thiago Alcantaram,Brazil,30,1.74,Liverpool,Midfielder,6,200000.0
 Mohamed Salah,Egypt,28,1.75,Liverpool,Forward,11,200000.0
 Bernd Leno,Germany,29,1.9,Arsenal,Goalkeeper,1,100000.0
-Hector Bellerin,Spain,26,1.78,Liverpool,Defender,2,110000.0
+Hector Bellerin,Spain,26,1.78,Juventus,Defender,2,110000.0
 Granit Xhaka,Switzerland,28,1.85,Arsenal,Midfielder,34,100000.0
 Thomas Partey,Ghana,27,1.85,Chelsea,Midfielder,18,250000.0
-Pierre-Emerick Aubameyang,Gabon,31,1.875,Arsenal,Forward,14,250000.0
+Pierre-Emerick Aubameyang,Gabon,31,1.875,Juventus,Forward,14,250000.0
 Biplob Kumer Deb,Bangladesh,45,1.6,Juventus,Defender,3,168000.0
 Kevin Malone,United States of America,38,1.79,Juventus,Goalkeeper,69,248000.0
 Sadid Hasan,Bangladesh,24,1.75,Everton,Midfielder,3,88000.0

@@ -32,6 +32,8 @@ public class LoginController {
 
     @FXML protected void initialize() throws Exception {
 
+        App.setUserMode(UserMode.NONE);
+
         username.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) attemptLogin();
         });
@@ -65,9 +67,12 @@ public class LoginController {
                 WarningModal.display("Login failed", "Sorry, your account is already signed-in to right now.");
             else {
                 App.setUserMode(UserMode.LOGGED_IN);
-                App.setPlayerList( (PlayerList) o );
+                PlayerList pList = (PlayerList) o;
+                App.setPlayerList(pList);
                 System.out.println("ok");
                 video.getMediaPlayer().stop();
+                // System.out.println("theme: " + pList.getClub("che").getTheme());
+                App.setTheme (pList.getClientClub().getTheme());
                 App.setRoot("signed-in");
                 App.setRtc(new ReadThreadClient(networkUtil));
             }

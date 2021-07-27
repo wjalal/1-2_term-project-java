@@ -35,62 +35,6 @@ public class PlayerDisplayController implements Initializable {
 
     }
 
-    // public void setPlayerList (PlayerList playerList) {
-    //     this.playerList = playerList;
-    // }
-
-    // @FXML public void initialize() {
-    //     loadPlayers();
-    // }
-
-    // public Label getAgeLabel() {
-    //     return ageLabel;
-    // }
-
-    // public ImageView getClubImage() {
-    //     return clubImage;
-    // }
-
-    // public Label getClubLabel() {
-    //     return clubLabel;
-    // }
-    
-    // public ImageView getCountryImage() {
-    //     return countryImage;
-    // }
-
-    // public Label getCountryLabel() {
-    //     return countryLabel;
-    // }
-
-    // public Label getHeightLabel() {
-    //     return heightLabel;
-    // }
-
-    // public Label getNameLabel() {
-    //     return nameLabel;
-    // }
-
-    // public Label getNumberLabel() {
-    //     return numberLabel;
-    // }
-
-    // public ImageView getPlayerImage() {
-    //     return playerImage;
-    // }
-
-    // public ListView<String> getPlayerListView() {
-    //     return playerListView;
-    // }
-
-    // public Label getPositionLabel() {
-    //     return positionLabel;
-    // }
-
-    // public Label getSalaryLabel() {
-    //     return salaryLabel;
-    // }
-
     @FXML public void loadPlayers() {
         // for (Player p : playerList.get())
         //     playerListView.getItems().add(p.getName());
@@ -123,11 +67,11 @@ public class PlayerDisplayController implements Initializable {
         clubLabel.setDisable(true);
         countryLabel.setText("No data selected");
         countryLabel.setDisable(true);
-        Image pfp = new Image(getClass().getResourceAsStream("pfp/profile.png"));
+        Image pfp = new Image(getClass().getResourceAsStream("images/profile.png"));
         playerImage.setImage(pfp);
-        Image cflag = new Image(getClass().getResourceAsStream("cflag/flag.png"));
+        Image cflag = new Image(getClass().getResourceAsStream("images/flag.png"));
         countryImage.setImage(cflag);
-        Image clublogo = new Image(getClass().getResourceAsStream("clublogo/logo.png"));
+        Image clublogo = new Image(getClass().getResourceAsStream("images/logo.png"));
         clubImage.setImage(clublogo);
         if (App.getUserMode() == UserMode.LOGGED_IN) {
             auctionButton.setDisable(true);

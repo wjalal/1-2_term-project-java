@@ -54,7 +54,7 @@
                <children>
                   <ImageView fx:id="playerImage" fitHeight="191.0" fitWidth="183.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@pfp/profile.png" />
+                        <Image url="@images/profile.png" />
                      </image>
                   </ImageView>
                   <VBox alignment="TOP_CENTER" prefHeight="169.0" prefWidth="166.0" spacing="10.0">
@@ -66,7 +66,7 @@
                         </Label>
                         <ImageView fx:id="clubImage" fitHeight="86.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                            <image>
-                              <Image url="@clublogo/logo.png" />
+                              <Image url="@images/logo.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="clubLabel" alignment="CENTER" disable="true" prefHeight="39.0" prefWidth="132.0" text="No data selected" wrapText="true" />
@@ -84,7 +84,7 @@
                         </Label>
                         <ImageView fx:id="countryImage" fitHeight="65.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@cflag/flag.png" />
+                              <Image url="@images/flag.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="countryLabel" alignment="CENTER" disable="true" prefHeight="16.0" prefWidth="146.0" text="No data selected" wrapText="true" />
