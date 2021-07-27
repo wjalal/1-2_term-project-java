@@ -17,7 +17,7 @@ public class Country extends Team {
 
     public Country(String name) throws Exception {
         super(name);
-        this.flagBytes = Files.readAllBytes(Paths.get("cflag/" + this.getName() + ".png"));
+        this.flagBytes = Files.readAllBytes(Paths.get("data/cflag/" + this.getName() + ".png"));
     }
 
     public List<Player> searchByClubAndCountry (Club club) {

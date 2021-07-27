@@ -18,7 +18,7 @@ public class Club extends Team {
 
     public Club(String name) throws Exception {
         super(name);
-        this.logoBytes = Files.readAllBytes(Paths.get("clublogo/" + this.getName() + ".png"));
+        this.logoBytes = Files.readAllBytes(Paths.get("data/clublogo/" + this.getName() + ".png"));
     }
 
     public void setPasswordHash(String passwordHash) {

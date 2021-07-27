@@ -122,7 +122,7 @@ public class Player implements Serializable {
     }
 
     public void setPfp() throws Exception {
-        this.pfpBytes = Files.readAllBytes(Paths.get("pfp/" + this.getName() + ".png"));
+        this.pfpBytes = Files.readAllBytes(Paths.get("data/pfp/" + this.getName() + ".png"));
     }
 
     public Image getPfp() {

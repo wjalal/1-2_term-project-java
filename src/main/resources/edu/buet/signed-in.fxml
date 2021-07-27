@@ -472,7 +472,7 @@
                                        <children>
                                           <ImageView fx:id="newPlayerPfp" fitHeight="222.0" fitWidth="246.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@pfp/profile.png" />
+                                                <Image url="@images/profile.png" />
                                              </image>
                                           </ImageView>
                                           <Button fx:id="addPfp" mnemonicParsing="false" onAction="#addPfpChoose" prefHeight="40.0" text="Select Picture" />

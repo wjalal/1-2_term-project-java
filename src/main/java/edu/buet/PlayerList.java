@@ -148,7 +148,7 @@ public class PlayerList implements Serializable {
         playerList.clear();
         countryList.clear();
         clubList.clear();
-        BufferedReader br = new BufferedReader(new FileReader("players.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("data/players.txt"));
         while (true) {
             String line = br.readLine();
             if (line == null) break;
@@ -185,7 +185,7 @@ public class PlayerList implements Serializable {
         }
         br.close();
 
-        BufferedReader br2 = new BufferedReader(new FileReader("accounts.txt"));
+        BufferedReader br2 = new BufferedReader(new FileReader("data/accounts.txt"));
         while (true) {
             String line = br2.readLine();
             if (line == null) break;
@@ -198,7 +198,7 @@ public class PlayerList implements Serializable {
         }
         br2.close();
 
-        BufferedReader br3 = new BufferedReader(new FileReader("auction-list.txt"));
+        BufferedReader br3 = new BufferedReader(new FileReader("data/auction-list.txt"));
         while (true) {
             String line = br3.readLine();
             if (line == null) break;
@@ -214,7 +214,7 @@ public class PlayerList implements Serializable {
 
     public void readCredentialsFromFile() throws Exception {
 
-        BufferedReader br = new BufferedReader(new FileReader("credentials.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("data/credentials.txt"));
 
         while (true) {
             String line = br.readLine();
@@ -233,7 +233,7 @@ public class PlayerList implements Serializable {
     }
 
     public void saveToFile() throws Exception {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("players.txt"));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("data/players.txt"));
         for (Player s : playerList) {
             bw.write(s.getName() + "," + s.getCountry() + "," + s.getAge() + "," + s.getHeight() + "," + s.getClub()
                     + "," + s.getPosition() + "," + s.getNumber() + "," + s.getSalary());
@@ -241,8 +241,8 @@ public class PlayerList implements Serializable {
         }
         bw.close();
         for (Player s : playerList) {
-            Files.createDirectories(Paths.get("pfp"));
-            Files.write(Paths.get("pfp/" + s.getName() + ".png"), s.getPfpBytes());
+            Files.createDirectories(Paths.get("data/pfp"));
+            Files.write(Paths.get("data/pfp/" + s.getName() + ".png"), s.getPfpBytes());
             // try {
             //     File file = new File("pfp/" + s.getName() + ".png");
             //     file.createNewFile();
@@ -254,25 +254,25 @@ public class PlayerList implements Serializable {
             // }
         }
         for (Club c : clubList) {
-            Files.createDirectories(Paths.get("clublogo"));
-            Files.write(Paths.get("clublogo/" + c.getName() + ".png"), c.getLogoBytes());
+            Files.createDirectories(Paths.get("data/clublogo"));
+            Files.write(Paths.get("data/clublogo/" + c.getName() + ".png"), c.getLogoBytes());
         }
         for (Country c: countryList) {
-            Files.createDirectories(Paths.get("cflag"));
-            Files.write(Paths.get("cflag/" + c.getName() + ".png"), c.getFlagBytes());
+            Files.createDirectories(Paths.get("data/cflag"));
+            Files.write(Paths.get("data/cflag/" + c.getName() + ".png"), c.getFlagBytes());
         }
 
-        BufferedWriter bw2 = new BufferedWriter(new FileWriter("accounts.txt"));
+        BufferedWriter bw2 = new BufferedWriter(new FileWriter("data/accounts.txt"));
         for (Club c : clubList) bw2.write( c.getName() + "," + c.getBalance() + "," + c.getTheme() + "\n" );
         bw2.close();
 
-        BufferedWriter bw3 = new BufferedWriter(new FileWriter("auction-list.txt"));
+        BufferedWriter bw3 = new BufferedWriter(new FileWriter("data/auction-list.txt"));
         for (Player p : auctionList) bw3.write( p.getName() + "," + p.getPrice() + "\n" );
         bw3.close();
     }
 
     public void saveCredentialsToFile() throws Exception {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("credentials.txt"));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("data/credentials.txt"));
         for (Club c : clubList) bw.write( c.getName() + "," + c.getPasswordHash() + "\n" );
         bw.close();
     }

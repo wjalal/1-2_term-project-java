@@ -1,0 +1,7 @@
+Manchester United,2.5025E8,Dark
+Juventus,2.4914E8,Dark
+Manchester City,2.5E8,Dark
+Chelsea,2.5011E8,Dark
+Arsenal,2.5058E8,Midnight
+Everton,24900.0,Light
+Liverpool,2.5051E8,Dark

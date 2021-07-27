@@ -344,7 +344,7 @@ public class MainController implements Initializable {
         addSalary.getValueFactory().setValue(0.0);
         addNumber.getValueFactory().setValue(1);
         newPlayerPfpBytes = null;
-        newPlayerPfp.setImage(new Image(getClass().getResourceAsStream("pfp/profile.png")));
+        newPlayerPfp.setImage(new Image(getClass().getResourceAsStream("images/profile.png")));
     }
 
     @FXML private void submitPlayer() throws Exception {

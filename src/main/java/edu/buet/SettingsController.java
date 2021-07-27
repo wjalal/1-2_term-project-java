@@ -5,21 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 // import javafx.fxml.FXMLLoader;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.media.Media;  
-import javafx.scene.media.MediaPlayer;  
-import javafx.scene.media.MediaView; 
-import javafx.util.Duration;
+
 // import javafx.scene.control.Label;
 // import javafx.scene.control.ListView;
 // import javafx.scene.image.*;
-import java.io.File;
-import java.nio.file.*;
-import java.net.URL;
-
-import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
-import javafx.scene.input.KeyCode;
 
 
 public class SettingsController {
