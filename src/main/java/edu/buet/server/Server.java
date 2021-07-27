@@ -2,7 +2,6 @@ package edu.buet.server;
 
 import edu.buet.PlayerList;
 import edu.buet.Club;
-import edu.buet.LoginCredential;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -59,11 +58,8 @@ public class Server {
                 }
             }
         }).start();
-        // (new Thread() {
-        //     public void run() {
-                new Server();
-        //     }
-        // }).r
+        
+        new Server();
         
     }
 }

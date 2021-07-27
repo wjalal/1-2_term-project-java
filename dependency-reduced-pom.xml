@@ -43,7 +43,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>edu.buet.server.Main</mainClass>
+                  <mainClass>edu.buet.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>
@@ -52,15 +52,6 @@
       </plugin>
     </plugins>
   </build>
-  <dependencies>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-media</artifactId>
-      <version>15</version>
-      <type>pom</type>
-      <scope>compile</scope>
-    </dependency>
-  </dependencies>
   <properties>
     <maven.compiler.target>11</maven.compiler.target>
     <maven.compiler.source>11</maven.compiler.source>

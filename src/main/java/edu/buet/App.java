@@ -1,20 +1,15 @@
 package edu.buet;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 // import java.util.*;
 import java.io.IOException;
 import javafx.scene.image.*;
-// import com.sun.javafx.css.StyleManager;
-// import org.controlsfx.control.Notifications;
 
-/**
- * JavaFX App
- */
 public class App extends Application {
 
     private static Stage mainStage;
@@ -27,7 +22,32 @@ public class App extends Application {
     private static boolean uiUpdate = false;
     private static int tabIdx1 = 0, tabIdx2 = 0;
     private static String theme = "Dark";
+    private static PlayerDisplayController pDispP, pDispC;
+    private static Label balanceLabel;
 
+    static void setBalanceLabel(Label balanceLabel) {
+        App.balanceLabel = balanceLabel;
+    }
+
+    static Label getBalanceLabel() {
+        return balanceLabel;
+    }
+
+    public static void setpDispC(PlayerDisplayController pDispC) {
+        App.pDispC = pDispC;
+    }
+
+    public static void setpDispP(PlayerDisplayController pDispP) {
+        App.pDispP = pDispP;
+    }
+
+    public static PlayerDisplayController getpDispC() {
+        return pDispC;
+    }
+
+    public static PlayerDisplayController getpDispP() {
+        return pDispP;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -62,9 +82,10 @@ public class App extends Application {
     }
 
     static void setRoot(String fxml) throws IOException {
-        if ( !(App.getTheme().equals("Light")) )
+        if ( !(App.getTheme().equals("Light")) ) {
+            scene.getStylesheets().clear();
             scene.getStylesheets().add(App.class.getResource("styles/" + App.getTheme() +  ".css").toExternalForm());
-        else scene.getStylesheets().clear();
+        } else scene.getStylesheets().clear();
         scene.setRoot(loadFXML(fxml));
     }
 
@@ -135,14 +156,6 @@ public class App extends Application {
     static void setTheme(String theme) {
         App.theme = theme;
     }
-
-    // public static Club getClientClub() {
-    //     return clientClub;
-    // }
-
-    // public static void setClientClub (Club clientClub) {
-    //     App.clientClub = clientClub;
-    // }
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));

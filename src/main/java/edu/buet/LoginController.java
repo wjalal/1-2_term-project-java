@@ -1,6 +1,5 @@
 package edu.buet;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
 // import javafx.fxml.FXMLLoader;
 import javafx.scene.control.PasswordField;
@@ -14,9 +13,6 @@ import javafx.util.Duration;
 // import javafx.scene.image.*;
 import java.io.File;
 import java.nio.file.*;
-import java.net.URL;
-
-import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.scene.input.KeyCode;
 
@@ -121,12 +117,6 @@ public class LoginController {
                     if ( o instanceof String && ((String)o).equals("CLUB_PRE-EXIST") )  
                         WarningModal.display("Sign up Failed", "A club with this name already exists");
                     else if (o instanceof String && ((String)o).equals("CLUB_ADD_SUCCESS")) {
-                        // App.setUserMode(UserMode.LOGGED_IN);
-                        // App.setPlayerList( (PlayerList) o );
-                        // System.out.println("ok");
-                        // App.setRoot("signed-in");
-                        // App.setRtc(new ReadThreadClient(networkUtil));
-                        // if ( ((Club)o).getName().equalsIgnoreCase(username.getText()) ) {
                             WarningModal.display("Success", "Your account has been created successfully\n" + 
                                                 "The program will be closed now. You may restart the program and log in.");
                             System.exit(0);

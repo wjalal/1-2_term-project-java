@@ -21,9 +21,9 @@ Mohamed Salah,Egypt,28,1.75,Liverpool,Forward,11,200000.0
 Bernd Leno,Germany,29,1.9,Arsenal,Goalkeeper,1,100000.0
 Hector Bellerin,Spain,26,1.78,Juventus,Defender,2,110000.0
 Granit Xhaka,Switzerland,28,1.85,Arsenal,Midfielder,34,100000.0
-Thomas Partey,Ghana,27,1.85,Chelsea,Midfielder,18,250000.0
+Thomas Partey,Ghana,27,1.85,Arsenal,Midfielder,18,250000.0
 Pierre-Emerick Aubameyang,Gabon,31,1.875,Juventus,Forward,14,250000.0
 Biplob Kumer Deb,Bangladesh,45,1.6,Juventus,Defender,3,168000.0
 Kevin Malone,United States of America,38,1.79,Juventus,Goalkeeper,69,248000.0
 Sadid Hasan,Bangladesh,24,1.75,Everton,Midfielder,3,88000.0
-Madhav Krishna,India,28,1.72,Arsenal,Forward,10,56000.0
+Madhav Krishna,India,28,1.72,Chelsea,Forward,10,56000.0

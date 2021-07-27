@@ -5,9 +5,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.FileOutputStream;
 import java.io.Serializable;
-import java.io.File;
 import java.nio.file.*;
 
 public class PlayerList implements Serializable {
@@ -243,15 +241,6 @@ public class PlayerList implements Serializable {
         for (Player s : playerList) {
             Files.createDirectories(Paths.get("data/pfp"));
             Files.write(Paths.get("data/pfp/" + s.getName() + ".png"), s.getPfpBytes());
-            // try {
-            //     File file = new File("pfp/" + s.getName() + ".png");
-            //     file.createNewFile();
-            //     FileOutputStream stream = new FileOutputStream(file, false);
-            //     stream.write(s.getPfpBytes());
-            //     stream.close();
-            // } catch (Exception e) {
-            //     e.printStackTrace();
-            // }
         }
         for (Club c : clubList) {
             Files.createDirectories(Paths.get("data/clublogo"));
@@ -282,12 +271,5 @@ public class PlayerList implements Serializable {
         for (Player p : playerList) list.add(p.getName());
         return list;
     }
-
-    // public List<String> guessPlayer (String name) {
-    //     List<String> guesses = new ArrayList<String>();
-    //     for (Player p : playerList) if(StringDeviation.deviation(p.getName(), name) < 0.2) guesses.add(p.getName());
-    //     if (guesses.size() < 1) return null;
-    //     return guesses;
-    // }
 
 }

@@ -4,27 +4,20 @@ package edu.buet;
 // import java.net.URL;
 // import java.util.ResourceBundle;
 // import javafx.scene.layout.*;
-import javafx.application.Application;
 import javafx.application.Platform;
 
 import java.io.IOException;
-import java.util.*;
 
 public class ReadThreadClient implements Runnable {
     private Thread thr;
     private NetworkUtil networkUtil;
     private PlayerList playerList = App.getPlayerList();
-    // private PlayerDisplayController pDisp;
 
     public ReadThreadClient(NetworkUtil networkUtil) {
         this.networkUtil = networkUtil;
         this.thr = new Thread(this);
         thr.start();
     }
-
-    // public void setpDisp(PlayerDisplayController pDisp) {
-    //     this.pDisp = pDisp;
-    // }
 
     public void run() {
         try {
@@ -41,14 +34,19 @@ public class ReadThreadClient implements Runnable {
                     Platform.runLater( () -> {
                         WarningModal.display("Auction Successful", p.getName() + " is now available in the auction market");
                     });
-                    // this.pDisp.loadPlayers();
-                    //App.setUiUpdate(true);
                 } else if (o instanceof TransferRequest) {
                     TransferRequest req = (TransferRequest) o;
                     Player p = playerList.searchByName(req.getPlayer().getName());
                     Club d = playerList.getClub(req.getDest().getName());
                     p.transferTo(d);
                     playerList.getAuctionList().remove(p);
+                    Platform.runLater( () -> {
+                        App.getBalanceLabel().setText(Player.showSalary(playerList.getClientClub().getBalance()));
+                        if ( App.getpDispP().playerListView.getItems().size() == playerList.getClientClub().getPlayers().size() 
+                                || App.getpDispP().playerListView.getItems().contains(p.getName()) )  App.getpDispP().loadPlayers();
+                        if ( App.getpDispC().playerListView.getItems().size() == playerList.getClientClub().getPlayers().size() 
+                                || App.getpDispC().playerListView.getItems().contains(p.getName()) )  App.getpDispC().loadPlayers();
+                    });
                     if (d == playerList.getClientClub()) Platform.runLater( () -> {
                         WarningModal.display("Transfer Successful", p.getName() + " is now part of this club.");
                     });
@@ -100,11 +98,6 @@ public class ReadThreadClient implements Runnable {
             }
         }
 
-            // try {
-            //     networkUtil.closeConnection();
-            // } catch (IOException e) {
-            //     e.printStackTrace();
-            // }
     }
 }
 

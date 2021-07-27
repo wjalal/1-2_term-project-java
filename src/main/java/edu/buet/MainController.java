@@ -27,13 +27,6 @@ import javafx.collections.FXCollections;
 
 public class MainController implements Initializable {
 
-    
-
-    // @FXML private ListView<String> playerListView = playerDisplay.getPlayerListView();
-    // @FXML private Label ageLabel = playerDisplay.getAgeLabel(), heightLabel = playerDisplay.getHeightLabel(), numberLabel = playerDisplay.getNumberLabel(), 
-    //                     positionLabel = playerDisplay.getPositionLabel(), salaryLabel = playerDisplay.getSalaryLabel(), nameLabel = playerDisplay.getNameLabel(), 
-    //                     clubLabel = playerDisplay.getClubLabel(), countryLabel = playerDisplay.getCountryLabel();
-    // @FXML private ImageView playerImage = playerDisplay.getPlayerImage(), clubImage = playerDisplay.getClubImage(), countryImage = playerDisplay.getCountryImage();
 
     PlayerList playerList = App.getPlayerList();
     List<Club> clubList = playerList.getClubList();
@@ -59,7 +52,8 @@ public class MainController implements Initializable {
     public void initialize (URL arg0, ResourceBundle arg1) {
         //playerList.readFromFile();
         //playerDisplayPController.setPlayerList(playerList);
-
+        App.setpDispP(playerDisplayPController);
+        App.setpDispC(playerDisplayCController);
         playerDisplayPController.loadPlayers();
         playerDisplayCController.loadPlayers();
                 
@@ -93,9 +87,11 @@ public class MainController implements Initializable {
 
         } else if (App.getUserMode()==UserMode.LOGGED_IN) {
 
+            App.setBalanceLabel(clubBalanceDisplay);
             clubNameDisplay.textProperty().bind(new SimpleStringProperty(playerList.getClientClub().getName()));
-            clubBalanceDisplay.textProperty().bind(new SimpleStringProperty(Player.showSalary(playerList.getClientClub().getBalance())));
+            //clubBalanceDisplay.textProperty().bind(new SimpleStringProperty(Player.showSalary(playerList.getClientClub().getBalance())));
             clubLogoDisplay.setImage(playerList.getClientClub().getLogo());
+            clubBalanceDisplay.setText(Player.showSalary(playerList.getClientClub().getBalance()));
 
             addCountry.setItems(FXCollections.observableArrayList(Country.nameList(countryList)));
             addPosition.getItems().addAll("Forward", "Midfielder", "Defender", "Goalkeeper");
