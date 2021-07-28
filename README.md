@@ -19,8 +19,7 @@ There are two executable classes: ```edu.buet.Main``` and ```edu.buet.server.Mai
 
  The JARs are produced by default in the ```target``` folder of the Maven project with the name of the project. To preserve the client JAR, you will have to rename it first and then build the server JAR. The ```server.jar``` must be placed in the same directory as the ```data``` folder (by default the project directory).
 
-Pre-compiled JARs are included in the repository. 
-
+Pre-compiled JARs are included in the repository in realease 1.0.0. 
 The JAR files can be run with:
 
 ```java -jar server.jar```
