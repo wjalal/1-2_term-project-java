@@ -1,6 +1,12 @@
 package edu.buet;
 
-public class Player {
+import java.io.Serializable;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import javafx.scene.image.*;
+import java.nio.file.*;
+
+public class Player implements Serializable {
     private String name;
     private Country country;
     private int age;
@@ -9,10 +15,15 @@ public class Player {
     private String position;
     private int number;
     private double salary;
+    private byte[] pfpBytes;
+    private boolean auctioned;
+    private double price;
 
-    public Player() {}
+    public Player() {
+        this.auctioned = false;
+    }
 
-    public Player (String name, Country country, int age, double height, Club club, String position, int number, double salary) {
+    public Player (String name, Country country, int age, double height, Club club, String position, int number, double salary) throws Exception {
         this.name = name;
         this.country = country;
         this.age = age;
@@ -21,6 +32,21 @@ public class Player {
         this.position = position;
         this.number = number;
         this.salary = salary;
+        this.setPfp();
+        this.auctioned = false;
+    }
+
+    public Player (String name, Country country, int age, double height, Club club, String position, int number, double salary, byte[] pfpBytes) throws Exception {
+        this.name = name;
+        this.country = country;
+        this.age = age;
+        this.height = height;
+        this.club = club;
+        this.position = position;
+        this.number = number;
+        this.salary = salary;
+        this.pfpBytes = pfpBytes;
+        this.auctioned = false;
     }
 
     public void setName (String name) {
@@ -41,6 +67,10 @@ public class Player {
 
     public void setAge (int age) {
         this.age = age;
+    }
+
+    public Player getPlayer() {
+        return this;
     }
 
     public int getAge() {
@@ -87,6 +117,28 @@ public class Player {
         return salary;
     }
 
+    public void setPfpBytes(byte[] pfpBytes) {
+        this.pfpBytes = pfpBytes;
+    }
+
+    public void setPfp() throws Exception {
+        this.pfpBytes = Files.readAllBytes(Paths.get("data/pfp/" + this.getName() + ".png"));
+    }
+
+    public Image getPfp() {
+        InputStream is = new ByteArrayInputStream(pfpBytes); 
+        Image pfp = new Image(is);
+        return pfp;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public static String showSalary(double salary) {
         StringBuffer output = new StringBuffer( String.format("%.2f", salary) );
         int commaNo = (output.length()-4)/3;
@@ -111,4 +163,35 @@ public class Player {
         print(-1);
     }
 
+    public void transferTo (Club c) {
+        if (this.isAuctioned()) {
+            this.getClub().setBalance (this.club.getBalance() + this.price);
+            this.getClub().getPlayers().remove(this);
+            this.setAuctionState(false);
+            this.setClub(c);
+            this.getClub().setBalance (this.club.getBalance() - this.price);
+            c.getPlayers().add(this);
+        }
+    }
+
+    public byte[] getPfpBytes() {
+        return pfpBytes;
+    }
+
+    public boolean isAuctioned() {
+        return this.auctioned;
+    }
+
+    public void setAuctionState (boolean state) {
+        this.auctioned = state;
+    }
+
+
+    public String getSalaryLabel() {
+        return Player.showSalary(salary);
+    }
+    
+    public String getPriceLabel() {
+        return Player.showSalary(price);
+    }
 }

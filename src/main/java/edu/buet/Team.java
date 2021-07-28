@@ -1,8 +1,9 @@
 package edu.buet;
 
+import java.io.Serializable;
 import java.util.*;
 
-public abstract class Team {
+public abstract class Team implements Serializable {
     private String name;
     private List<Player> players = new ArrayList<Player>();
 
@@ -26,6 +27,10 @@ public abstract class Team {
 
     public String getName() {
         return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

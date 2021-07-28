@@ -1,18 +1,32 @@
 package edu.buet;
 import java.util.*;
 import javafx.scene.image.*;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.nio.file.*;
 
 public class Club extends Team {
 
-    private Image logo;
+    private byte[] logoBytes;
+    private String passwordHash;
+    private double balance;
+    private String theme = "Dark";
 
     public Club() {
         super();
     }
 
-    public Club(String name) {
+    public Club(String name) throws Exception {
         super(name);
-        this.logo = new Image(getClass().getResourceAsStream("clublogo/" + this.getName() + ".png"));
+        this.logoBytes = Files.readAllBytes(Paths.get("data/clublogo/" + this.getName() + ".png"));
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
     public boolean isFull() {
@@ -46,7 +60,38 @@ public class Club extends Team {
     }
 
     public Image getLogo() {
-        return this.logo;
+        InputStream is = new ByteArrayInputStream(logoBytes); 
+        Image logo = new Image(is);
+        return logo;
+    }
+
+    public void setLogoBytes(byte[] logoBytes) {
+        this.logoBytes = logoBytes;
+    }
+
+    public byte[] getLogoBytes() {
+        return logoBytes;
+    }
+
+    public boolean containsCountry (Country country) {
+        for (Player p : this.getPlayers()) if (p.getCountry() == country) return true;
+        return false;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+    
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
 }

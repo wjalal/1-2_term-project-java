@@ -5,13 +5,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="40.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.buet.DemographicsController">
     <children>
-      <HBox prefHeight="494.0" prefWidth="1240.0" spacing="80.0">
+      <HBox fx:id="hBox" prefHeight="494.0" prefWidth="1240.0" spacing="80.0">
          <children>
             <VBox alignment="CENTER" prefHeight="494.0" prefWidth="1269.0" spacing="30.0">
                <children>
@@ -32,7 +34,7 @@
                   </TableView>
                </children>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="494.0" prefWidth="1257.0" spacing="30.0">
+            <VBox fx:id="clubTableVBox" alignment="CENTER" prefHeight="494.0" prefWidth="1257.0" spacing="30.0">
                <children>
                   <Label alignment="CENTER" text="Club-wise player counts">
                      <font>
@@ -56,9 +58,16 @@
             <Insets left="40.0" right="40.0" />
          </VBox.margin>
       </HBox>
-        <Button fx:id="secondaryButton" onAction="#switchToPrimary" text="Back to Search" />
+        <Button fx:id="secondaryButton" onAction="#switchToPrimary" prefHeight="40.0" text="Back to Search">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/back.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
     </children>
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets left="20.0" right="20.0" top="20.0" />
     </padding>
 </VBox>

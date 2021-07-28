@@ -2,18 +2,22 @@ package edu.buet;
 
 import java.util.*;
 import javafx.scene.image.*;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.nio.file.*;
 
 public class Country extends Team {
 
-    private Image flag;
+    private byte[] flagBytes;
+    private int countfromclub;
 
     public Country() {
         super();
     }
 
-    public Country(String name) {
+    public Country(String name) throws Exception {
         super(name);
-        this.flag = new Image(getClass().getResourceAsStream("cflag/" + this.getName() + ".png"));
+        this.flagBytes = Files.readAllBytes(Paths.get("data/cflag/" + this.getName() + ".png"));
     }
 
     public List<Player> searchByClubAndCountry (Club club) {
@@ -38,6 +42,30 @@ public class Country extends Team {
     }
 
     public Image getFlag() {
-        return this.flag;
+        InputStream is = new ByteArrayInputStream(flagBytes); 
+        Image flag = new Image(is);
+        return flag;
+    }
+
+    public int getCountFromClub (Club club) {
+        int count = 0;
+        for (Player p : club.getPlayers()) if (p.getCountry() == this) count ++;
+        return count;
+    }
+
+    public int getCountfromclub() {
+        return countfromclub;
+    }
+
+    public void setCountfromclub(int countfromclub) {
+        this.countfromclub = countfromclub;
+    }
+
+    public void setFlagBytes(byte[] flagBytes) {
+        this.flagBytes = flagBytes;
+    }
+
+    public byte[] getFlagBytes() {
+        return flagBytes;
     }
 }
