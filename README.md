@@ -1,8 +1,11 @@
 # 1-2_term-project-java
 
-This is a simple football player/club management system made with JavaFX. The repository consists of a Maven project. To initialise the project, install [Apache Maven](https://maven.apache.org/) and run:
+This is a simple football player/club management system made with JavaFX. The repository consists of a Maven project. To initialise and run the project, download the source code, install [Apache Maven](https://maven.apache.org/) and run:
 
- ``` mvn clean install ```
+``` mvn clean install ```
+
+``` mvn clean javafx:run ```
+
 
 There are two executable classes: ```edu.buet.Main``` and ```edu.buet.server.Main``` that need to run separately as the client and server respectively. To built an executable standalone JAR of the client, run:
 
