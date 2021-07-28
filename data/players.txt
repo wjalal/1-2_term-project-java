@@ -18,7 +18,7 @@ Virgil van Dijk,Netherlands,29,1.93,Liverpool,Defender,4,180000.0
 Jordan Henderson,England,30,1.82,Chelsea,Midfielder,14,140000.0
 Thiago Alcantaram,Brazil,30,1.74,Liverpool,Midfielder,6,200000.0
 Mohamed Salah,Egypt,28,1.75,Liverpool,Forward,11,200000.0
-Bernd Leno,Germany,29,1.9,Arsenal,Goalkeeper,1,100000.0
+Bernd Leno,Germany,29,1.9,Chelsea,Goalkeeper,1,100000.0
 Hector Bellerin,Spain,26,1.78,Juventus,Defender,2,110000.0
 Granit Xhaka,Switzerland,28,1.85,Arsenal,Midfielder,34,100000.0
 Thomas Partey,Ghana,27,1.85,Arsenal,Midfielder,18,250000.0
