@@ -73,7 +73,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>edu.buet.server.Main</mainClass>
+                                    <mainClass>edu.buet.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
