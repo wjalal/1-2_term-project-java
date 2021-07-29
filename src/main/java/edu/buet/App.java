@@ -24,6 +24,16 @@ public class App extends Application {
     private static String theme = "Dark";
     private static PlayerDisplayController pDispP, pDispC;
     private static Label balanceLabel;
+    private static String serverAddress = "127.0.0.1";
+    private static int serverPort = 6969;
+
+    static String getServerAddress() {
+        return serverAddress;
+    }
+
+    static int getServerPort() {
+        return serverPort;
+    }
 
     static void setBalanceLabel(Label balanceLabel) {
         App.balanceLabel = balanceLabel;
@@ -165,8 +175,32 @@ public class App extends Application {
 
     public static void main(String[] args) throws Exception {
 
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h")) {
+                System.out.println("\nIf the client is launched without arguments, it will try to connect");
+                System.out.println("to localhost (127.0.0.1) assuming that the server is running on the same");
+                System.out.println("device. The default port is 6969. If only one argument is put, it will be");
+                System.out.println("assumed as the server address and the default port 6969 will be used. Eg. :");
+                System.out.println("\n\tjava -jar client.jar 192.168.0.101");
+                System.out.println("\n(Client will try to connect to 192.168.0.101 at port 6969)");
+                System.out.println("\n\nA second argument can be used to spcify port after server address:");
+                System.out.println("\n\tjava -jar client.jar 192.168.0.101 3000");
+                System.out.println("\n(Client will try to connect to 192.168.0.101 at port 3000)\n");
+                System.exit(0);
+            } else {
+                App.serverAddress = args[0];
+            }
+        } else if (args.length == 2) {
+            App.serverAddress = args[0];
+            App.serverPort = Integer.parseInt(args[1]);
+        } else if (args.length != 0) {
+            System.out.println("\nInvalid arguments, run with argument --help or -h for help:");
+            System.out.println("\n\tjava -jar client.jar --help \n");
+            System.exit(0);
+        }
+
         try {
-            networkUtil = new NetworkUtil("127.0.0.1", 33333);
+            networkUtil = new NetworkUtil(App.serverAddress, App.serverPort);
 
         } catch (Exception e) {
             System.out.println(e);

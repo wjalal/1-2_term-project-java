@@ -43,7 +43,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>edu.buet.Main</mainClass>
+                  <mainClass>edu.buet.server.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>

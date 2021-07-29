@@ -10,6 +10,7 @@ import java.util.*;
 
 public class Server {
 
+    private static int serverPort = 6969;
     private ServerSocket serverSocket;
     private static PlayerList playerList = new PlayerList();
     public HashMap<Club, NetworkUtil> clientMap;
@@ -17,7 +18,7 @@ public class Server {
     Server() {
         clientMap = new HashMap<>();
         try {
-            serverSocket = new ServerSocket(33333);
+            serverSocket = new ServerSocket(serverPort);
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 serve(clientSocket);
@@ -37,6 +38,23 @@ public class Server {
     }
 
     public static void main(String args[]) throws Exception {
+
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h")) {
+                System.out.println("\nIf the server is launched without arguments, it will use port 6969 by default.");
+                System.out.println("If only one argument is put, it will be assumed as port to run on. Eg. :");
+                System.out.println("\n\tjava -jar server.jar 3000");
+                System.out.println("\n(Server will try to launch on port 3000)\n");
+                System.exit(0);
+            } else {
+                serverPort = Integer.parseInt(args[0]);
+            }
+        } else if (args.length != 0) {
+            System.out.println("\nInvalid arguments, run with argument --help or -h for help:");
+            System.out.println("\n\tjava -jar server.jar --help \n");
+            System.exit(0);
+        }
+
         playerList.readFromFile();
         (new Thread() {
             public void run() {

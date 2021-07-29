@@ -1,0 +1,23 @@
+#VTab .tab-label {
+    -fx-rotate: 90;
+}
+
+#VTab .tab {
+    -fx-padding: 6em 0em 6em 0em;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-font-size: 1.2em;
+}
+
+#HTab .tab-label {
+    -fx-rotate: 0;
+    -fx-font-size: 0.83em;
+}
+
+#HTab .tab {
+    -fx-padding: 0.5em 1.5em 0.5em 1.5em;
+}
+
+/* #HTab .tab-header-background {
+    -fx-background-color: rgba(0, 0, 0, 0);
+} */

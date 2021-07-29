@@ -316,7 +316,7 @@ public class MainController implements Initializable {
     @FXML private void logout() throws IOException {
         if ( ConfirmationModal.display("Sign-out Confirmation", "Are you sure you want to sign out?") )  {
             App.getNetworkUtil().closeConnection();
-            App.setNetworkUtil(new NetworkUtil("127.0.0.1", 33333));
+            App.setNetworkUtil(new NetworkUtil(App.getServerAddress(), App.getServerPort()));
             App.setRoot("login");
         } else if (App.getUserMode() == UserMode.GUEST) App.setRoot("guest");
     }
