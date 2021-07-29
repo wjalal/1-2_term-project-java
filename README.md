@@ -5,7 +5,7 @@ This is a simple football player/club management system made with JavaFX.
 
 ## Running the App
 
-Pre-compiled JARs ([Download](https://github.com/WJGalib/1-2_term-project-java/releases/download/1.0.0/1-2_term-project-java_1905084.zip)) are included in the repository in [realease 1.0.0](https://github.com/WJGalib/1-2_term-project-java/releases/tag/1.0.0).
+Pre-compiled JARs ([Download](https://github.com/WJGalib/1-2_term-project-java/releases/download/1.0.0/1-2_term-project-java_football-manager_1905084.zip)) are included in the repository in [realease 1.0.0](https://github.com/WJGalib/1-2_term-project-java/releases/tag/1.0.0).
 The JAR files can be run with:
 
 ```java -jar server.jar```
@@ -34,3 +34,10 @@ To build an executable standalone JAR of the server, navigate to ```pom.xml``` a
 
 
 The JARs are produced by default in the ```target``` folder of the Maven project with the name of the project. To preserve the client JAR, you will have to rename it first and then build the server JAR. The ```server.jar``` must be placed in the same directory as the ```data``` folder (by default the project directory).
+
+
+To actually run over a network, the server IP (static) address (for client) and port (optionally) need to be specified through command-line arguments. Details of their usage can be found by runnning: 
+
+``` java -jar server.jar --help ```
+
+``` java -jar client.jar --help ```
